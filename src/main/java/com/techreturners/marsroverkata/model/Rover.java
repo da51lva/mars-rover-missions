@@ -4,9 +4,15 @@ import java.awt.*;
 
 public interface Rover {
 
-    Point getPosition();
+    int getXPosition();
 
-    void move(Move move);
+    int getYPosition();
 
     Orientation getOrientation();
+
+    void move();
+
+    void orientateRight();
+
+    void orientateLeft();
 }

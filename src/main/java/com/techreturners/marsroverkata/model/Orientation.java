@@ -8,10 +8,12 @@ public enum Orientation {
     S(0, -1),
     W(-1, 0);
 
-    private Point translation;
+    private int dx;
+    private int dy;
 
     Orientation(int dx, int dy) {
-        this.translation = new Point(dx, dy);
+        this.dx = dx;
+        this.dy = dy;
     }
 
     public Orientation next() {
@@ -22,7 +24,11 @@ public enum Orientation {
         return values()[(this.ordinal() + values().length - 1) % values().length]; //cycles round Enum
     }
 
-    public Point getTranslation() {
-        return translation;
+    public int getDx() {
+        return dx;
+    }
+
+    public int getDy() {
+        return dy;
     }
 }

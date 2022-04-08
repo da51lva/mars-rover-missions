@@ -1,40 +1,47 @@
 package com.techreturners.marsroverkata.model;
 
-import java.awt.*;
-
 public class MarsRover implements Rover {
 
-    private Point position;
+    private int xPosition;
+    private int yPosition;
     private Orientation orientation;
 
-    public MarsRover(int x, int y, Orientation orientation) {
-        this.position = new Point(x,y);
+    public MarsRover(int xPosition, int yPosition, Orientation orientation) {
+        this.xPosition = xPosition;
+        this.yPosition = yPosition;
         this.orientation = orientation;
     }
 
+
     @Override
-    public Point getPosition() {
-        return position;
+    public int getXPosition() {
+        return xPosition;
     }
 
     @Override
-    public void move(Move move) {
-        switch (move){
-            case M:
-                Point translation = orientation.getTranslation();
-                position.translate((int) translation.getX(), (int) translation.getY()); //TODO: not sure about using Point
-                break;
-            case R:
-                orientation = orientation.next();
-                break;
-            case L:
-                orientation = orientation.prev();
-                break;
-        }
+    public int getYPosition() {
+        return yPosition;
     }
 
     @Override
     public Orientation getOrientation() {
         return orientation;
     }
+
+    @Override
+    public void move() {
+        xPosition += orientation.getDx();
+        yPosition += orientation.getDy();
+    }
+
+    @Override
+    public void orientateRight() {
+        orientation = orientation.next();
+    }
+
+    @Override
+    public void orientateLeft() {
+        orientation = orientation.prev();
+    }
+
 }
