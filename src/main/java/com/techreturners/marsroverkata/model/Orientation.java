@@ -15,11 +15,11 @@ public enum Orientation {
     }
 
     public Orientation next() {
-        return values()[(this.ordinal() + values().length + 1) % values().length]; //cycles round Enums
+        return values()[(this.ordinal() + values().length + 1) % values().length]; //cycles round Enum
     }
 
     public Orientation prev() {
-        return values()[(this.ordinal() + values().length - 1) % values().length]; //cycles round Enums
+        return values()[(this.ordinal() + values().length - 1) % values().length]; //cycles round Enum
     }
 
     public Point getTranslation() {
