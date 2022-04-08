@@ -1,5 +1,7 @@
 package com.techreturners.marsroverkata.model;
 
 public enum Move {
-    M
+    M,
+    L,
+    R
 }

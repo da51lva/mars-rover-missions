@@ -3,6 +3,7 @@ package com.techreturners.marsroverkata.app;
 import com.techreturners.marsroverkata.model.MarsRover;
 import com.techreturners.marsroverkata.model.Move;
 import com.techreturners.marsroverkata.model.Orientation;
+import com.techreturners.marsroverkata.model.Rover;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -37,6 +38,24 @@ class MarsRoverControllerTest {
         );
     }
 
+    private static Stream<Arguments> generateDataForTestSingleRoverInfinitePlateauWithOrientationMoves(){
+        return Stream.of(
+
+                Arguments.of(10, 10, Orientation.W, 10, 10, Orientation.N, Arrays.asList(Move.L)),
+                Arguments.of(10, 10, Orientation.S, 10, 10, Orientation.N, Arrays.asList(Move.L,Move.L)),
+                Arguments.of(10, 10, Orientation.E, 10, 10, Orientation.N, Arrays.asList(Move.L,Move.L,Move.L)),
+                Arguments.of(10, 10, Orientation.N, 10, 10, Orientation.N, Arrays.asList(Move.L,Move.L,Move.L,Move.L)),
+                Arguments.of(10, 10, Orientation.E, 10, 10, Orientation.N, Arrays.asList(Move.R)),
+                Arguments.of(10, 10, Orientation.S, 10, 10, Orientation.N, Arrays.asList(Move.R, Move.R)),
+                Arguments.of(10, 10, Orientation.W, 10, 10, Orientation.N, Arrays.asList(Move.R, Move.R,Move.R)),
+                Arguments.of(10, 10, Orientation.N, 10, 10, Orientation.N, Arrays.asList(Move.R, Move.R,Move.R,Move.R)),
+
+                Arguments.of(10, 10, Orientation.E, 10, 10, Orientation.E, Arrays.asList(Move.L,Move.L,Move.R,Move.R)),
+                Arguments.of(10, 10, Orientation.N, 10, 10, Orientation.S, Arrays.asList(Move.L,Move.L)),
+                Arguments.of(10, 10, Orientation.E, 10, 10, Orientation.W, Arrays.asList(Move.L,Move.R,Move.R,Move.L,Move.L,Move.L,Move.L,Move.R))
+        );
+    }
+
     @BeforeEach
     public void setUp() {
         marsRoverController = new MarsRoverController();
@@ -59,6 +78,18 @@ class MarsRoverControllerTest {
         marsRoverController.moveCurrentRover(moves);
         assertEquals(expectedX, marsRoverController.getCurrentRover().getPosition().getX());
         assertEquals(expectedY, marsRoverController.getCurrentRover().getPosition().getY());
+    }
+
+    @ParameterizedTest
+    @MethodSource("generateDataForTestSingleRoverInfinitePlateauWithOrientationMoves")
+    public void testSingleRoverInfinitePlateauWithOrientationMoves(int expectedX, int expectedY, Orientation expectedOrientation, int roverStartingX, int roverStartingY, Orientation startingOrientation, List<Move> moves) {
+
+        marsRoverController.addRover(new MarsRover(roverStartingX, roverStartingY, startingOrientation));
+        marsRoverController.moveCurrentRover(moves);
+        Rover rover = marsRoverController.getCurrentRover();
+        assertEquals(expectedX, rover.getPosition().getX());
+        assertEquals(expectedY, rover.getPosition().getY());
+        assertEquals(expectedOrientation, rover.getOrientation());
     }
 
 }

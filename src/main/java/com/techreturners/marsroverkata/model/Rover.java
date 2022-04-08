@@ -7,4 +7,6 @@ public interface Rover {
     Point getPosition();
 
     void move(Move move);
+
+    Orientation getOrientation();
 }

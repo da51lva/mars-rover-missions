@@ -19,7 +19,22 @@ public class MarsRover implements Rover {
 
     @Override
     public void move(Move move) {
-        Point translation = orientation.getTranslation();
-        position.translate((int) translation.getX(), (int) translation.getY()); //TODO: not sure about using Point
+        switch (move){
+            case M:
+                Point translation = orientation.getTranslation();
+                position.translate((int) translation.getX(), (int) translation.getY()); //TODO: not sure about using Point
+                break;
+            case R:
+                orientation = orientation.next();
+                break;
+            case L:
+                orientation = orientation.prev();
+                break;
+        }
+    }
+
+    @Override
+    public Orientation getOrientation() {
+        return orientation;
     }
 }
