@@ -2,13 +2,10 @@ package com.techreturners.marsroverkata.app;
 
 import com.techreturners.marsroverkata.model.*;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.CsvFileSource;
 import org.junit.jupiter.params.provider.MethodSource;
-import org.mockito.junit.jupiter.MockitoExtension;
-
 
 import java.util.Arrays;
 import java.util.List;
@@ -27,8 +24,8 @@ class MarsRoverControllerTest {
     }
 
     @ParameterizedTest
-    @MethodSource("generateDataForTestSingleRoverInfinitePlateauOnlyMoveEast")
-    public void testSingleRoverInfinitePlateauOnlyMoveEast(int expectedX, int expectedY, int roverStartingX, int roverStartingY, List<Move> moves) {
+    @MethodSource("generateDataForTestSingleRoverMovingEastWithinLargePlateau")
+    public void testSingleRoverMovingEastWithinLargePlateau(int expectedX, int expectedY, int roverStartingX, int roverStartingY, List<Move> moves) {
 
         marsRoverController.addPlateau(PlateauFactory.createNurseryPlateau(1000, 1000));
         marsRoverController.addRover(roverStartingX,roverStartingY, Orientation.E);
@@ -39,8 +36,8 @@ class MarsRoverControllerTest {
     }
 
     @ParameterizedTest
-    @MethodSource("generateDataForTestSingleRoverInfinitePlateauWithOrientation")
-    public void testSingleRoverInfinitePlateauWithOrientation(int expectedX, int expectedY, int roverStartingX, int roverStartingY, Orientation startingOrientation, List<Move> moves) {
+    @MethodSource("generateDataForTestSingleRoverMovingInGivenOrientationWithinLargePlateau")
+    public void testSingleRoverMovingInGivenOrientationWithinLargePlateau(int expectedX, int expectedY, int roverStartingX, int roverStartingY, Orientation startingOrientation, List<Move> moves) {
         marsRoverController.addPlateau(PlateauFactory.createNurseryPlateau(1000, 1000));
         marsRoverController.addRover(roverStartingX,roverStartingY, startingOrientation);
 
@@ -50,8 +47,8 @@ class MarsRoverControllerTest {
     }
 
     @ParameterizedTest
-    @MethodSource("generateDataForTestSingleRoverInfinitePlateauWithOrientationMoves")
-    public void testSingleRoverInfinitePlateauWithOrientationMoves(int expectedX, int expectedY, Orientation expectedOrientation, int roverStartingX, int roverStartingY, Orientation startingOrientation, List<Move> moves) {
+    @MethodSource("generateDataForTestSingleRoverWithLAndRMovesWithinLargePlateau")
+    public void testSingleRoverWithLAndRMovesWithinLargePlateau(int expectedX, int expectedY, Orientation expectedOrientation, int roverStartingX, int roverStartingY, Orientation startingOrientation, List<Move> moves) {
 
         marsRoverController.addPlateau(PlateauFactory.createNurseryPlateau(1000, 1000));
         marsRoverController.addRover(roverStartingX,roverStartingY, startingOrientation);
@@ -63,8 +60,8 @@ class MarsRoverControllerTest {
     }
 
     @ParameterizedTest
-    @MethodSource("generateDataForTestSingleRoverInfinitePlateauWithLRAndMMoves")
-    public void testSingleRoverInfinitePlateauWithLRAndMMoves(int expectedX, int expectedY, Orientation expectedOrientation, int roverStartingX, int roverStartingY, Orientation startingOrientation, List<Move> moves) {
+    @MethodSource("generateDataForTestSingleRoverWithLRAndMMovesWithinLargePlateau")
+    public void testSingleRoverWithLRAndMMovesWithinLargePlateau(int expectedX, int expectedY, Orientation expectedOrientation, int roverStartingX, int roverStartingY, Orientation startingOrientation, List<Move> moves) {
 
         marsRoverController.addPlateau(PlateauFactory.createNurseryPlateau(1000, 1000));
         marsRoverController.addRover(roverStartingX,roverStartingY, startingOrientation);
@@ -82,7 +79,7 @@ class MarsRoverControllerTest {
         marsRoverController.addPlateau(PlateauFactory.createNurseryPlateau(xMax, yMax));
         marsRoverController.addRover(roverStartingX,roverStartingY, Orientation.valueOf(startingOrientation));
 
-        marsRoverController.moveCurrentRover(Arrays.stream(moves.split("")).map(Move::valueOf).collect(Collectors.toList()));
+        marsRoverController.moveCurrentRover(toListOfMoves(moves));
         assertEquals(expectedX, marsRoverController.getCurrentRoverPosition().getX());
         assertEquals(expectedY,  marsRoverController.getCurrentRoverPosition().getY());
         assertEquals(Orientation.valueOf(expectedOrientation), marsRoverController.getCurrentRoverOrientation());
@@ -93,7 +90,14 @@ class MarsRoverControllerTest {
     //Todo: Test adding rover when plateau is full
     //Todo: throw exception if rover position is out of Bounds
 
-    private static Stream<Arguments> generateDataForTestSingleRoverInfinitePlateauOnlyMoveEast() {
+    /**
+     * Converts a list of moves represented as String to a List of Enumerations Move
+     */
+    private List<Move> toListOfMoves(String input){
+        return Arrays.stream(input.split("")).map(Move::valueOf).collect(Collectors.toList());
+    }
+
+    private static Stream<Arguments> generateDataForTestSingleRoverMovingEastWithinLargePlateau() {
         return Stream.of(
                 Arguments.of(1, 0, 0, 0, List.of(Move.M)),
                 Arguments.of(5, 0, 0, 0, Arrays.asList(Move.M, Move.M, Move.M, Move.M, Move.M)),
@@ -103,7 +107,7 @@ class MarsRoverControllerTest {
         );
     }
 
-    private static Stream<Arguments> generateDataForTestSingleRoverInfinitePlateauWithOrientation() {
+    private static Stream<Arguments> generateDataForTestSingleRoverMovingInGivenOrientationWithinLargePlateau() {
         return Stream.of(
                 Arguments.of(15, 10, 10, 10, Orientation.E, Arrays.asList(Move.M, Move.M, Move.M, Move.M, Move.M)),
                 Arguments.of(10, 15, 10, 10, Orientation.N, Arrays.asList(Move.M, Move.M, Move.M, Move.M, Move.M)),
@@ -112,7 +116,7 @@ class MarsRoverControllerTest {
         );
     }
 
-    private static Stream<Arguments> generateDataForTestSingleRoverInfinitePlateauWithOrientationMoves(){
+    private static Stream<Arguments> generateDataForTestSingleRoverWithLAndRMovesWithinLargePlateau(){
         return Stream.of(
                 Arguments.of(10, 10, Orientation.W, 10, 10, Orientation.N, List.of(Move.L)),
                 Arguments.of(10, 10, Orientation.S, 10, 10, Orientation.N, Arrays.asList(Move.L,Move.L)),
@@ -129,7 +133,7 @@ class MarsRoverControllerTest {
         );
     }
 
-    private static Stream<Arguments> generateDataForTestSingleRoverInfinitePlateauWithLRAndMMoves(){
+    private static Stream<Arguments> generateDataForTestSingleRoverWithLRAndMMovesWithinLargePlateau(){
         return Stream.of(
                 Arguments.of(1, 3, Orientation.N, 1, 2, Orientation.N, Arrays.asList(Move.L, Move.M,Move.L,Move.M,Move.L,Move.M,Move.L,Move.M,Move.M)),
                 Arguments.of(5, 1, Orientation.E, 3, 3, Orientation.E, Arrays.asList(Move.M,Move.M,Move.R,Move.M,Move.M,Move.R,Move.M,Move.R,Move.R,Move.M)),
