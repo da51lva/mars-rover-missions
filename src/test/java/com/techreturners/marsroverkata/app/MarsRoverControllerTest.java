@@ -2,13 +2,17 @@ package com.techreturners.marsroverkata.app;
 
 import com.techreturners.marsroverkata.model.*;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.CsvFileSource;
 import org.junit.jupiter.params.provider.MethodSource;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -16,7 +20,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 class MarsRoverControllerTest {
 
     MarsRoverController marsRoverController;
-
 
     @BeforeEach
     public void setUp() {
@@ -27,56 +30,68 @@ class MarsRoverControllerTest {
     @MethodSource("generateDataForTestSingleRoverInfinitePlateauOnlyMoveEast")
     public void testSingleRoverInfinitePlateauOnlyMoveEast(int expectedX, int expectedY, int roverStartingX, int roverStartingY, List<Move> moves) {
 
-        marsRoverController.addRover(new MarsRover(roverStartingX, roverStartingY, Orientation.E));
+        marsRoverController.addPlateau(PlateauFactory.createNurseryPlateau(1000, 1000));
+        marsRoverController.addRover(roverStartingX,roverStartingY, Orientation.E);
+
         marsRoverController.moveCurrentRover(moves);
-        assertEquals(expectedX, marsRoverController.getCurrentRover().getXPosition());
-        assertEquals(expectedY, marsRoverController.getCurrentRover().getYPosition());
+        assertEquals(expectedX, marsRoverController.getCurrentRoverPosition().getX());
+        assertEquals(expectedY,  marsRoverController.getCurrentRoverPosition().getY());
     }
 
     @ParameterizedTest
     @MethodSource("generateDataForTestSingleRoverInfinitePlateauWithOrientation")
     public void testSingleRoverInfinitePlateauWithOrientation(int expectedX, int expectedY, int roverStartingX, int roverStartingY, Orientation startingOrientation, List<Move> moves) {
-        marsRoverController.addRover(new MarsRover(roverStartingX, roverStartingY, startingOrientation));
+        marsRoverController.addPlateau(PlateauFactory.createNurseryPlateau(1000, 1000));
+        marsRoverController.addRover(roverStartingX,roverStartingY, startingOrientation);
+
         marsRoverController.moveCurrentRover(moves);
-        assertEquals(expectedX, marsRoverController.getCurrentRover().getXPosition());
-        assertEquals(expectedY, marsRoverController.getCurrentRover().getYPosition());
+        assertEquals(expectedX, marsRoverController.getCurrentRoverPosition().getX());
+        assertEquals(expectedY,  marsRoverController.getCurrentRoverPosition().getY());
     }
 
     @ParameterizedTest
     @MethodSource("generateDataForTestSingleRoverInfinitePlateauWithOrientationMoves")
     public void testSingleRoverInfinitePlateauWithOrientationMoves(int expectedX, int expectedY, Orientation expectedOrientation, int roverStartingX, int roverStartingY, Orientation startingOrientation, List<Move> moves) {
 
-        marsRoverController.addRover(new MarsRover(roverStartingX, roverStartingY, startingOrientation));
+        marsRoverController.addPlateau(PlateauFactory.createNurseryPlateau(1000, 1000));
+        marsRoverController.addRover(roverStartingX,roverStartingY, startingOrientation);
+
         marsRoverController.moveCurrentRover(moves);
-        Rover rover = marsRoverController.getCurrentRover();
-        assertEquals(expectedX, rover.getXPosition());
-        assertEquals(expectedY, rover.getYPosition());
-        assertEquals(expectedOrientation, rover.getOrientation());
+        assertEquals(expectedX, marsRoverController.getCurrentRoverPosition().getX());
+        assertEquals(expectedY,  marsRoverController.getCurrentRoverPosition().getY());
+        assertEquals(expectedOrientation, marsRoverController.getCurrentRoverOrientation());
     }
 
     @ParameterizedTest
     @MethodSource("generateDataForTestSingleRoverInfinitePlateauWithLRAndMMoves")
     public void testSingleRoverInfinitePlateauWithLRAndMMoves(int expectedX, int expectedY, Orientation expectedOrientation, int roverStartingX, int roverStartingY, Orientation startingOrientation, List<Move> moves) {
 
-        marsRoverController.addRover(new MarsRover(roverStartingX, roverStartingY, startingOrientation));
+        marsRoverController.addPlateau(PlateauFactory.createNurseryPlateau(1000, 1000));
+        marsRoverController.addRover(roverStartingX,roverStartingY, startingOrientation);
+
         marsRoverController.moveCurrentRover(moves);
-        Rover rover = marsRoverController.getCurrentRover();
-        assertEquals(expectedX, rover.getXPosition());
-        assertEquals(expectedY, rover.getYPosition());
-        assertEquals(expectedOrientation, rover.getOrientation());
+        assertEquals(expectedX, marsRoverController.getCurrentRoverPosition().getX());
+        assertEquals(expectedY,  marsRoverController.getCurrentRoverPosition().getY());
+        assertEquals(expectedOrientation, marsRoverController.getCurrentRoverOrientation());
     }
 
     @ParameterizedTest
-    @MethodSource("generateDataForTestSingleRoverMovingOutOfFinitePlateaus")
-    public void testSingleRoverMovingOutOfFinitePlateau(int expectedX, int expectedY, Orientation expectedOrientation, int roverStartingX, int roverStartingY, Orientation startingOrientation, List<Move> moves) {
+    @CsvFileSource(resources = "/single-rover-moving-out-of-nursery-plateau.csv", numLinesToSkip = 1)
+    public void testSingleRoverMovingOutOfNurseryPlateau(int expectedX, int expectedY, String expectedOrientation, int xMax, int yMax, int roverStartingX, int roverStartingY, String startingOrientation, String moves) {
 
-        marsRoverController.addRover(new MarsRover(roverStartingX, roverStartingY, startingOrientation));
-        marsRoverController.moveCurrentRover(moves);
-        Rover rover = marsRoverController.getCurrentRover();
-        assertEquals(expectedX, rover.getXPosition());
-        assertEquals(expectedY, rover.getYPosition());
-        assertEquals(expectedOrientation, rover.getOrientation());
+        marsRoverController.addPlateau(PlateauFactory.createNurseryPlateau(xMax, yMax));
+        marsRoverController.addRover(roverStartingX,roverStartingY, Orientation.valueOf(startingOrientation));
+
+        marsRoverController.moveCurrentRover(Arrays.stream(moves.split("")).map(Move::valueOf).collect(Collectors.toList()));
+        assertEquals(expectedX, marsRoverController.getCurrentRoverPosition().getX());
+        assertEquals(expectedY,  marsRoverController.getCurrentRoverPosition().getY());
+        assertEquals(Orientation.valueOf(expectedOrientation), marsRoverController.getCurrentRoverOrientation());
     }
+
+    //Todo: Test Rover Starting position not within Plateau
+    //Todo: Test plateau of size 0
+    //Todo: Test adding rover when plateau is full
+    //Todo: throw exception if rover position is out of Bounds
 
     private static Stream<Arguments> generateDataForTestSingleRoverInfinitePlateauOnlyMoveEast() {
         return Stream.of(
@@ -122,15 +137,5 @@ class MarsRoverControllerTest {
                 Arguments.of(103, 11, Orientation.W, 100, 10, Orientation.W, Arrays.asList(Move.L,Move.L,Move.M,Move.M,Move.L,Move.M,Move.R,Move.M,Move.R,Move.R))
         );
     }
-
-    private static Stream<Arguments> generateDataForTestSingleRoverMovingOutOfFinitePlateaus(){
-        return Stream.of(
-                Arguments.of(1, 3, Orientation.N, 1, 2, Orientation.N, Arrays.asList(Move.L, Move.M,Move.L,Move.M,Move.L,Move.M,Move.L,Move.M,Move.M)),
-                Arguments.of(5, 1, Orientation.E, 3, 3, Orientation.E, Arrays.asList(Move.M,Move.M,Move.R,Move.M,Move.M,Move.R,Move.M,Move.R,Move.R,Move.M)),
-                Arguments.of(12 , 4, Orientation.S, 10, 10, Orientation.S, Arrays.asList(Move.M,Move.M,Move.M,Move.M,Move.L,Move.M,Move.M,Move.R,Move.M,Move.M)),
-                Arguments.of(103, 11, Orientation.W, 100, 10, Orientation.W, Arrays.asList(Move.L,Move.L,Move.M,Move.M,Move.L,Move.M,Move.R,Move.M,Move.R,Move.R))
-        );
-    }
-
 
 }

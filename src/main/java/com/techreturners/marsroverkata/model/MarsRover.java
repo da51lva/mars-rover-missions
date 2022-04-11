@@ -2,25 +2,10 @@ package com.techreturners.marsroverkata.model;
 
 public class MarsRover implements Rover {
 
-    private int xPosition;
-    private int yPosition;
     private Orientation orientation;
 
-    public MarsRover(int xPosition, int yPosition, Orientation orientation) {
-        this.xPosition = xPosition;
-        this.yPosition = yPosition;
+    public MarsRover(Orientation orientation) {
         this.orientation = orientation;
-    }
-
-
-    @Override
-    public int getXPosition() {
-        return xPosition;
-    }
-
-    @Override
-    public int getYPosition() {
-        return yPosition;
     }
 
     @Override
@@ -28,11 +13,6 @@ public class MarsRover implements Rover {
         return orientation;
     }
 
-    @Override
-    public void move() {
-        xPosition += orientation.getDx();
-        yPosition += orientation.getDy();
-    }
 
     @Override
     public void orientateRight() {
@@ -42,6 +22,11 @@ public class MarsRover implements Rover {
     @Override
     public void orientateLeft() {
         orientation = orientation.prev();
+    }
+
+    @Override
+    public Position getMoveTranslation() {
+        return orientation.getTranslation();
     }
 
 }

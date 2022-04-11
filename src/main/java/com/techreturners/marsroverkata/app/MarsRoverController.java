@@ -1,33 +1,42 @@
 package com.techreturners.marsroverkata.app;
 
-import com.techreturners.marsroverkata.model.Move;
-import com.techreturners.marsroverkata.model.Orientation;
-import com.techreturners.marsroverkata.model.Plateau;
-import com.techreturners.marsroverkata.model.Rover;
+import com.techreturners.marsroverkata.model.*;
 
-import java.awt.*;
 import java.util.List;
 
 public class MarsRoverController {
 
+    private Plateau plateau;
+
     private Rover currentRover;
 
-    public void addRover(Rover rover) {
-        currentRover = rover;
+
+    public void addPlateau(Plateau plateau){
+        this.plateau = plateau;
     }
 
-    public Rover getCurrentRover() {
-        return currentRover;
+    public void addRover(int x, int y, Orientation orientation) {
+        currentRover = new MarsRover(orientation);
+        plateau.addNewRover(currentRover, new Position(x, y));
+    }
+
+    public Position getCurrentRoverPosition() {
+        return plateau.getRoverPosition(currentRover);
+    }
+
+    public Orientation getCurrentRoverOrientation(){
+        return currentRover.getOrientation();
     }
 
     public void moveCurrentRover(List<Move> moves) {
-        moves.stream().forEach(this::moveCurrentRover);
+        moves.stream()
+                .forEach(this::moveCurrentRover);
     }
 
-    private void moveCurrentRover(Move move){
-        switch (move){
+    private void moveCurrentRover(Move move) {
+        switch (move) {
             case M:
-                currentRover.move();
+                plateau.moveRover(currentRover);
                 break;
             case R:
                 currentRover.orientateRight();
