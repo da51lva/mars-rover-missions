@@ -11,8 +11,8 @@ public class MarsRoverController {
     private Rover currentRover;
 
 
-    public void addPlateau(Plateau plateau){
-        this.plateau = plateau;
+    public void createPlateau(int xMax, int yMax){
+        this.plateau = new NurseryPlateau(xMax, yMax);
     }
 
     public void addRover(int x, int y, Orientation orientation) {

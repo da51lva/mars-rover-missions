@@ -1,0 +1,5 @@
+Console Input, Expected X, Expected Y, Expected Orientation
+5 5 N,5,5,N
+100 5 W,100,5,W
+2000 2000 S,2000,2000,S
+5555 5555 E,5555,5555,E

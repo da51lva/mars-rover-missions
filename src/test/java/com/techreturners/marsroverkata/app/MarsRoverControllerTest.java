@@ -27,7 +27,7 @@ class MarsRoverControllerTest {
     @MethodSource("generateDataForTestSingleRoverMovingEastWithinLargePlateau")
     public void testSingleRoverMovingEastWithinLargePlateau(int expectedX, int expectedY, int roverStartingX, int roverStartingY, List<Move> moves) {
 
-        marsRoverController.addPlateau(PlateauFactory.createNurseryPlateau(1000, 1000));
+        marsRoverController.createPlateau(1000,1000);
         marsRoverController.addRover(roverStartingX,roverStartingY, Orientation.E);
 
         marsRoverController.moveCurrentRover(moves);
@@ -38,7 +38,7 @@ class MarsRoverControllerTest {
     @ParameterizedTest
     @MethodSource("generateDataForTestSingleRoverMovingInGivenOrientationWithinLargePlateau")
     public void testSingleRoverMovingInGivenOrientationWithinLargePlateau(int expectedX, int expectedY, int roverStartingX, int roverStartingY, Orientation startingOrientation, List<Move> moves) {
-        marsRoverController.addPlateau(PlateauFactory.createNurseryPlateau(1000, 1000));
+        marsRoverController.createPlateau(1000,1000);
         marsRoverController.addRover(roverStartingX,roverStartingY, startingOrientation);
 
         marsRoverController.moveCurrentRover(moves);
@@ -50,7 +50,7 @@ class MarsRoverControllerTest {
     @MethodSource("generateDataForTestSingleRoverWithLAndRMovesWithinLargePlateau")
     public void testSingleRoverWithLAndRMovesWithinLargePlateau(int expectedX, int expectedY, Orientation expectedOrientation, int roverStartingX, int roverStartingY, Orientation startingOrientation, List<Move> moves) {
 
-        marsRoverController.addPlateau(PlateauFactory.createNurseryPlateau(1000, 1000));
+        marsRoverController.createPlateau(1000,1000);
         marsRoverController.addRover(roverStartingX,roverStartingY, startingOrientation);
 
         marsRoverController.moveCurrentRover(moves);
@@ -63,7 +63,7 @@ class MarsRoverControllerTest {
     @MethodSource("generateDataForTestSingleRoverWithLRAndMMovesWithinLargePlateau")
     public void testSingleRoverWithLRAndMMovesWithinLargePlateau(int expectedX, int expectedY, Orientation expectedOrientation, int roverStartingX, int roverStartingY, Orientation startingOrientation, List<Move> moves) {
 
-        marsRoverController.addPlateau(PlateauFactory.createNurseryPlateau(1000, 1000));
+        marsRoverController.createPlateau(1000,1000);
         marsRoverController.addRover(roverStartingX,roverStartingY, startingOrientation);
 
         marsRoverController.moveCurrentRover(moves);
@@ -76,7 +76,7 @@ class MarsRoverControllerTest {
     @CsvFileSource(resources = "/single-rover-moving-out-of-nursery-plateau.csv", numLinesToSkip = 1)
     public void testSingleRoverMovingOutOfNurseryPlateau(int expectedX, int expectedY, String expectedOrientation, int xMax, int yMax, int roverStartingX, int roverStartingY, String startingOrientation, String moves) {
 
-        marsRoverController.addPlateau(PlateauFactory.createNurseryPlateau(xMax, yMax));
+        marsRoverController.createPlateau(xMax, yMax);
         marsRoverController.addRover(roverStartingX,roverStartingY, Orientation.valueOf(startingOrientation));
 
         marsRoverController.moveCurrentRover(toListOfMoves(moves));
