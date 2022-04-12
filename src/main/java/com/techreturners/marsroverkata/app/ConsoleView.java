@@ -18,33 +18,24 @@ public class ConsoleView {
 
             System.out.println("Welcome to the Mars Rover Mission");
             System.out.println("Please enter a size for your plateau to start");
-            acceptPlateauInput(scanner);
+            String input = scanner.nextLine();
+            presenter.executePlateauSizeInput(input);
 
-            System.out.println("And now a Rover's start position and orientation");
-            acceptRoverInput(scanner);
+            while (true) {
 
-            System.out.println("And now a list of moves for your Rover");
-            acceptMovesInput(scanner);
+                System.out.println("And now a Rover's start position and orientation");
+                input = scanner.nextLine();
+                if (input.equals("q")) break;
+                else presenter.executeNewRoverInput(input);
+
+                System.out.println("And now a list of moves for your Rover");
+                input = scanner.nextLine();
+                if (input.equals("q")) break;
+                else presenter.executeMovesInput(input);
+            }
         }
 
     }
-
-    private void acceptPlateauInput(Scanner scanner) {
-        String input = scanner.nextLine();
-        presenter.executePlateauSizeInput(input);
-    }
-
-
-    private void acceptRoverInput(Scanner scanner) {
-        String input = scanner.nextLine();
-        presenter.executeNewRoverInput(input);
-    }
-
-    private void acceptMovesInput(Scanner scanner) {
-        String input = scanner.nextLine();
-        presenter.executeMovesInput(input);
-    }
-
 
     public void displayResult(int x, int y, Orientation orientation) {
         System.out.println(String.format("%s %s %s", x, y, orientation));
