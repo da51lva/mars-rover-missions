@@ -60,31 +60,19 @@ class MarsRoverControllerTest {
     }
 
     @ParameterizedTest
-    @MethodSource("generateDataForTestSingleRoverWithLRAndMMovesWithinLargePlateau")
-    public void testSingleRoverWithLRAndMMovesWithinLargePlateau(int expectedX, int expectedY, Orientation expectedOrientation, int roverStartingX, int roverStartingY, Orientation startingOrientation, List<Move> moves) {
-
-        marsRoverController.createPlateau(1000,1000);
-        marsRoverController.addRover(roverStartingX,roverStartingY, startingOrientation);
-
-        marsRoverController.moveCurrentRover(moves);
-        assertEquals(expectedX, marsRoverController.getCurrentRoverPosition().getX());
-        assertEquals(expectedY,  marsRoverController.getCurrentRoverPosition().getY());
-        assertEquals(expectedOrientation, marsRoverController.getCurrentRoverOrientation());
+    @CsvFileSource(resources = "/single-rover-all-moves.csv", numLinesToSkip = 1)
+    public void testSingleRoverWithLRAndMMovesWithinLargePlateau(int roverStartingX, int roverStartingY, String startingOrientation, String moves,int expectedX, int expectedY, String expectedOrientation) {
+        takeFullTurn(1000,1000,roverStartingX,roverStartingY,startingOrientation,moves);
+        checkRoverResult(expectedX,expectedY,expectedOrientation);
     }
 
     @ParameterizedTest
     @CsvFileSource(resources = "/single-rover-moving-out-of-nursery-plateau.csv", numLinesToSkip = 1)
     public void testSingleRoverMovingOutOfNurseryPlateau(int expectedX, int expectedY, String expectedOrientation, int xMax, int yMax, int roverStartingX, int roverStartingY, String startingOrientation, String moves) {
-
-        marsRoverController.createPlateau(xMax, yMax);
-        marsRoverController.addRover(roverStartingX,roverStartingY, Orientation.valueOf(startingOrientation));
-
-        marsRoverController.moveCurrentRover(toListOfMoves(moves));
-        assertEquals(expectedX, marsRoverController.getCurrentRoverPosition().getX());
-        assertEquals(expectedY,  marsRoverController.getCurrentRoverPosition().getY());
-        assertEquals(Orientation.valueOf(expectedOrientation), marsRoverController.getCurrentRoverOrientation());
+        takeFullTurn(xMax,yMax, roverStartingX, roverStartingY, startingOrientation,moves);
+        checkRoverResult(expectedX,expectedY,expectedOrientation);
     }
-    
+
     @ParameterizedTest
     @CsvFileSource (resources = "/second-rover-input.csv", numLinesToSkip = 1)
     public void testSecondRoverWithinNurseryPlateau(int rover1X, int rover1Y, String rover1Orientation, String rover1Moves, int rover2X, int rover2Y, String rover2Orientation, String rover2Moves, int rover2ExpectedX, int rover2ExpectedY, String rover2ExpectedOrientation){
@@ -105,12 +93,12 @@ class MarsRoverControllerTest {
         marsRoverController.createPlateau(xMax,yMax);
         takeRoverTurn(x,y,orientation, moves);
     }
-    
+
     private void takeRoverTurn(int x, int y, String orientation, String moves){
         marsRoverController.addRover(x,y,Orientation.valueOf(orientation));
         marsRoverController.moveCurrentRover(toListOfMoves(moves));
     }
-    
+
     private void checkRoverResult(int expectedX, int expectedY, String expectedOrientation){
         assertEquals(expectedX, marsRoverController.getCurrentRoverPosition().getX());
         assertEquals(expectedY,  marsRoverController.getCurrentRoverPosition().getY());
@@ -163,15 +151,6 @@ class MarsRoverControllerTest {
                 Arguments.of(10, 10, Orientation.E, 10, 10, Orientation.E, Arrays.asList(Move.L,Move.L,Move.R,Move.R)),
                 Arguments.of(10, 10, Orientation.N, 10, 10, Orientation.S, Arrays.asList(Move.L,Move.L)),
                 Arguments.of(10, 10, Orientation.E, 10, 10, Orientation.W, Arrays.asList(Move.L,Move.R,Move.R,Move.L,Move.L,Move.L,Move.L,Move.R))
-        );
-    }
-
-    private static Stream<Arguments> generateDataForTestSingleRoverWithLRAndMMovesWithinLargePlateau(){
-        return Stream.of(
-                Arguments.of(1, 3, Orientation.N, 1, 2, Orientation.N, Arrays.asList(Move.L, Move.M,Move.L,Move.M,Move.L,Move.M,Move.L,Move.M,Move.M)),
-                Arguments.of(5, 1, Orientation.E, 3, 3, Orientation.E, Arrays.asList(Move.M,Move.M,Move.R,Move.M,Move.M,Move.R,Move.M,Move.R,Move.R,Move.M)),
-                Arguments.of(12 , 4, Orientation.S, 10, 10, Orientation.S, Arrays.asList(Move.M,Move.M,Move.M,Move.M,Move.L,Move.M,Move.M,Move.R,Move.M,Move.M)),
-                Arguments.of(103, 11, Orientation.W, 100, 10, Orientation.W, Arrays.asList(Move.L,Move.L,Move.M,Move.M,Move.L,Move.M,Move.R,Move.M,Move.R,Move.R))
         );
     }
 
