@@ -143,7 +143,7 @@ class MarsRoverModelTest {
         assertEquals(Orientation.valueOf(expectedOrientation), marsRoverModel.getCurrentRoverOrientation());
     }
 
-
+    //Todo: cant move rover that didn't get added to plateau
     //Todo: Test plateau of size 0
     //Todo: empty move list
 
