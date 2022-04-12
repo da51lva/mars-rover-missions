@@ -1,8 +1,11 @@
 package com.techreturners.marsroverkata.app;
 
+import com.techreturners.marsroverkata.model.MarsRoverModel;
 import com.techreturners.marsroverkata.model.Move;
 import com.techreturners.marsroverkata.model.Orientation;
 import com.techreturners.marsroverkata.model.Position;
+import com.techreturners.marsroverkata.presenter.Presenter;
+import com.techreturners.marsroverkata.view.ConsoleView;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -17,14 +20,13 @@ import java.util.List;
 import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.ArgumentMatchers.isA;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 class PresenterTest {
 
     @Mock
-    MarsRoverController marsRoverController;
+    MarsRoverModel marsRoverController;
     @Mock
     ConsoleView consoleView;
     private Presenter presenter;

@@ -1,10 +1,8 @@
-package com.techreturners.marsroverkata.app;
-
-import com.techreturners.marsroverkata.model.*;
+package com.techreturners.marsroverkata.model;
 
 import java.util.List;
 
-public class MarsRoverController {
+public class MarsRoverModel {
 
     private Plateau plateau;
 

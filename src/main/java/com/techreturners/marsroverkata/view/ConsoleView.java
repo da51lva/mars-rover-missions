@@ -1,5 +1,6 @@
-package com.techreturners.marsroverkata.app;
+package com.techreturners.marsroverkata.view;
 
+import com.techreturners.marsroverkata.presenter.Presenter;
 import com.techreturners.marsroverkata.model.Orientation;
 
 import java.util.Scanner;

@@ -1,7 +1,9 @@
-package com.techreturners.marsroverkata.app;
+package com.techreturners.marsroverkata.presenter;
 
+import com.techreturners.marsroverkata.model.MarsRoverModel;
 import com.techreturners.marsroverkata.model.Move;
 import com.techreturners.marsroverkata.model.Orientation;
+import com.techreturners.marsroverkata.view.ConsoleView;
 
 import java.util.Arrays;
 import java.util.List;
@@ -9,11 +11,11 @@ import java.util.stream.Collectors;
 
 public class Presenter {
 
-    private MarsRoverController marsRoverController;
+    private MarsRoverModel marsRoverModel;
     private ConsoleView consoleView;
 
-    public Presenter(MarsRoverController marsRoverController, ConsoleView consoleView) {
-        this.marsRoverController = marsRoverController;
+    public Presenter(MarsRoverModel marsRoverModel, ConsoleView consoleView) {
+        this.marsRoverModel = marsRoverModel;
         this.consoleView = consoleView;
     }
 
@@ -21,7 +23,7 @@ public class Presenter {
         String[] split = input.split(" ");
         int xMAx = Integer.valueOf(split[0]);
         int yMax = Integer.valueOf(split[1]);
-        marsRoverController.createPlateau(xMAx,yMax);
+        marsRoverModel.createPlateau(xMAx, yMax);
     }
 
     public void executeNewRoverInput(String input){
@@ -29,13 +31,15 @@ public class Presenter {
         int x = Integer.valueOf(split[0]);
         int y = Integer.valueOf(split[1]);
         Orientation orientation = Orientation.valueOf(split[2]);
-        marsRoverController.addRover(x,y,orientation);
+        marsRoverModel.addRover(x, y, orientation);
     }
 
     public void executeMovesInput(String input){
           List<Move> moves = Arrays.stream(input.split("")).map(Move::valueOf).collect(Collectors.toList());
-          marsRoverController.moveCurrentRover(moves);
-          consoleView.displayResult(marsRoverController.getCurrentRoverPosition().getX(),marsRoverController.getCurrentRoverPosition().getY(),marsRoverController.getCurrentRoverOrientation());
+          marsRoverModel.moveCurrentRover(moves);
+          consoleView.displayResult(marsRoverModel.getCurrentRoverPosition().getX(),
+                                    marsRoverModel.getCurrentRoverPosition().getY(),
+                                    marsRoverModel.getCurrentRoverOrientation());
     }
 
 }
