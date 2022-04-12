@@ -18,6 +18,25 @@ public class Position {
         return y;
     }
 
+    @Override
+    public boolean equals(Object o){
+        if (o == this) {
+            return true;
+        }
+
+        /* Check if o is an instance of Position or not
+          "null instanceof [type]" also returns false */
+        if (!(o instanceof Position)) {
+            return false;
+        }
+
+        // typecast o to Position so that we can compare data members
+        Position p = (Position) o;
+
+        // Compare x and y valus
+        return this.x == p.x && this.y == p.y;
+    }
+
     /**
      * Utility function - Returns a new Position given an origin and a translation
      */

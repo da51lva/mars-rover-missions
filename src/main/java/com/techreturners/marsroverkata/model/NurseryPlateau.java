@@ -29,8 +29,14 @@ public class NurseryPlateau implements Plateau{
         Position newPosition = Position.translate(roverPositions.get(rover),translation);
         if(isOutOfBounds(newPosition))
             ;//todo: store event
+        else if(isTaken(newPosition))
+            ;//todo: store event
         else
             roverPositions.put(rover, newPosition);
+    }
+
+    private boolean isTaken(Position newPosition) {
+        return roverPositions.containsValue(newPosition);
     }
 
     @Override

@@ -84,11 +84,44 @@ class MarsRoverControllerTest {
         assertEquals(expectedY,  marsRoverController.getCurrentRoverPosition().getY());
         assertEquals(Orientation.valueOf(expectedOrientation), marsRoverController.getCurrentRoverOrientation());
     }
+    
+    @ParameterizedTest
+    @CsvFileSource (resources = "/second-rover-input.csv", numLinesToSkip = 1)
+    public void testSecondRoverWithinNurseryPlateau(int rover1X, int rover1Y, String rover1Orientation, String rover1Moves, int rover2X, int rover2Y, String rover2Orientation, String rover2Moves, int rover2ExpectedX, int rover2ExpectedY, String rover2ExpectedOrientation){
+        takeFullTurn(1000,1000, rover1X,rover1Y,rover1Orientation,rover1Moves);
+        takeRoverTurn(rover2X,rover2Y,rover2Orientation,rover2Moves);
+        checkRoverResult(rover2ExpectedX,rover2ExpectedY,rover2ExpectedOrientation);
+    }
+
+    @ParameterizedTest
+    @CsvFileSource (resources = "/second-rover-collision.csv", numLinesToSkip = 1)
+    public void testSecondRoverBumpingIntoFirstWithinNurseryPlateau(int rover2X, int rover2Y, String rover2Orientation, String rover2Moves, int rover2ExpectedX, int rover2ExpectedY, String rover2ExpectedOrientation) {
+        takeFullTurn(1000,1000, 5,5,"N","L");
+        takeRoverTurn(rover2X,rover2Y,rover2Orientation,rover2Moves);
+        checkRoverResult(rover2ExpectedX,rover2ExpectedY,rover2ExpectedOrientation);
+    }
+
+        private void takeFullTurn(int xMax, int yMax, int x, int y, String orientation, String moves){
+        marsRoverController.createPlateau(xMax,yMax);
+        takeRoverTurn(x,y,orientation, moves);
+    }
+    
+    private void takeRoverTurn(int x, int y, String orientation, String moves){
+        marsRoverController.addRover(x,y,Orientation.valueOf(orientation));
+        marsRoverController.moveCurrentRover(toListOfMoves(moves));
+    }
+    
+    private void checkRoverResult(int expectedX, int expectedY, String expectedOrientation){
+        assertEquals(expectedX, marsRoverController.getCurrentRoverPosition().getX());
+        assertEquals(expectedY,  marsRoverController.getCurrentRoverPosition().getY());
+        assertEquals(Orientation.valueOf(expectedOrientation), marsRoverController.getCurrentRoverOrientation());
+    }
 
     //Todo: Test Rover Starting position not within Plateau
     //Todo: Test plateau of size 0
     //Todo: Test adding rover when plateau is full
     //Todo: throw exception if rover position is out of Bounds
+    //Todo: empty move list
 
     /**
      * Converts a list of moves represented as String to a List of Enumerations Move
