@@ -3,6 +3,8 @@ package com.techreturners.marsroverkata.model;
 public interface Rover {
 
 
+    Position getPosition();
+
     Orientation getOrientation();
 
     void orientateRight();
@@ -10,4 +12,6 @@ public interface Rover {
     void orientateLeft();
 
     Position getMoveTranslation();
+
+    void setPosition(Position position);
 }

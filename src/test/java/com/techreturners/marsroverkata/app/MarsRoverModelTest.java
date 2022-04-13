@@ -3,6 +3,7 @@ package com.techreturners.marsroverkata.app;
 import com.techreturners.marsroverkata.model.MarsRoverModel;
 import com.techreturners.marsroverkata.model.Move;
 import com.techreturners.marsroverkata.model.Orientation;
+import com.techreturners.marsroverkata.model.Rover;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -33,8 +34,7 @@ class MarsRoverModelTest {
         marsRoverModel.addRover(roverStartingX, roverStartingY, Orientation.E);
 
         marsRoverModel.moveCurrentRover(moves);
-        assertEquals(expectedX, marsRoverModel.getCurrentRoverPosition().getX());
-        assertEquals(expectedY, marsRoverModel.getCurrentRoverPosition().getY());
+        checkRoverResult(expectedX, expectedY,"E");
     }
 
     @ParameterizedTest
@@ -44,8 +44,7 @@ class MarsRoverModelTest {
         marsRoverModel.addRover(roverStartingX, roverStartingY, startingOrientation);
 
         marsRoverModel.moveCurrentRover(moves);
-        assertEquals(expectedX, marsRoverModel.getCurrentRoverPosition().getX());
-        assertEquals(expectedY, marsRoverModel.getCurrentRoverPosition().getY());
+        checkRoverResult(expectedX, expectedY,startingOrientation.toString());
     }
 
     @ParameterizedTest
@@ -56,9 +55,7 @@ class MarsRoverModelTest {
         marsRoverModel.addRover(roverStartingX, roverStartingY, startingOrientation);
 
         marsRoverModel.moveCurrentRover(moves);
-        assertEquals(expectedX, marsRoverModel.getCurrentRoverPosition().getX());
-        assertEquals(expectedY, marsRoverModel.getCurrentRoverPosition().getY());
-        assertEquals(expectedOrientation, marsRoverModel.getCurrentRoverOrientation());
+        checkRoverResult(expectedX,expectedY,expectedOrientation.toString());
     }
 
     @ParameterizedTest
@@ -124,7 +121,7 @@ class MarsRoverModelTest {
                 });
 
         marsRoverModel.addRover(0, 0, Orientation.N);
-        assertEquals(marsRoverModel.getCurrentRoverPosition(), null);
+        assertEquals(marsRoverModel.getCurrentRover(), null);
     }
 
     private void takeFullTurn(int xMax, int yMax, int x, int y, String orientation, String moves) {
@@ -138,9 +135,10 @@ class MarsRoverModelTest {
     }
 
     private void checkRoverResult(int expectedX, int expectedY, String expectedOrientation) {
-        assertEquals(expectedX, marsRoverModel.getCurrentRoverPosition().getX());
-        assertEquals(expectedY, marsRoverModel.getCurrentRoverPosition().getY());
-        assertEquals(Orientation.valueOf(expectedOrientation), marsRoverModel.getCurrentRoverOrientation());
+        Rover rover = marsRoverModel.getCurrentRover();
+        assertEquals(expectedX, rover.getPosition().getX());
+        assertEquals(expectedY, rover.getPosition().getY());
+        assertEquals(Orientation.valueOf(expectedOrientation), rover.getOrientation());
     }
 
     //Todo: cant move rover that didn't get added to plateau

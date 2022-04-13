@@ -3,6 +3,7 @@ package com.techreturners.marsroverkata.presenter;
 import com.techreturners.marsroverkata.model.MarsRoverModel;
 import com.techreturners.marsroverkata.model.Move;
 import com.techreturners.marsroverkata.model.Orientation;
+import com.techreturners.marsroverkata.model.Rover;
 import com.techreturners.marsroverkata.view.ConsoleView;
 
 import java.util.Arrays;
@@ -37,9 +38,11 @@ public class Presenter {
     public void executeMovesInput(String input){
           List<Move> moves = Arrays.stream(input.split("")).map(Move::valueOf).collect(Collectors.toList());
           marsRoverModel.moveCurrentRover(moves);
-          consoleView.displayResult(marsRoverModel.getCurrentRoverPosition().getX(),
-                                    marsRoverModel.getCurrentRoverPosition().getY(),
-                                    marsRoverModel.getCurrentRoverOrientation());
+          Rover rover = marsRoverModel.getCurrentRover();
+          consoleView.displayResult(rover.getPosition().getX(),
+                                    rover.getPosition().getY(),
+                                    rover.getOrientation());
+          consoleView.displayGrid(marsRoverModel.getPlateau().getXMax(),marsRoverModel.getPlateau().getYMax(),marsRoverModel.getRovers());
     }
 
 }

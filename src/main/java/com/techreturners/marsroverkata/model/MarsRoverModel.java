@@ -14,16 +14,19 @@ public class MarsRoverModel {
     }
 
     public void addRover(int x, int y, Orientation orientation) {
-        currentRover = new MarsRover(orientation);
-        plateau.addNewRover(currentRover, new Position(x, y));
+        currentRover = plateau.createNewRover(x, y, orientation);
     }
 
-    public Position getCurrentRoverPosition() {
-        return plateau.getRoverPosition(currentRover);
+    public Rover getCurrentRover() {
+        return currentRover;
     }
 
-    public Orientation getCurrentRoverOrientation(){
-        return currentRover.getOrientation();
+    public List<Rover> getRovers(){
+        return plateau.getRovers();
+    }
+
+    public Plateau getPlateau() {
+        return plateau;
     }
 
     public void moveCurrentRover(List<Move> moves) {

@@ -1,11 +1,16 @@
 package com.techreturners.marsroverkata.model;
 
+import java.util.List;
+
 public interface Plateau {
 
-
-    void addNewRover(Rover rover, Position startingPosition);
+    List<Rover> getRovers();
 
     void moveRover(Rover currentRover);
 
-    Position getRoverPosition(Rover rover);
+    Rover createNewRover(int x, int y, Orientation orientation);
+
+    int getXMax();
+
+    int getYMax();
 }

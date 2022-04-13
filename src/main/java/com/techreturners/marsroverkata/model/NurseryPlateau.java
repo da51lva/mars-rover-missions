@@ -1,7 +1,6 @@
 package com.techreturners.marsroverkata.model;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 public class NurseryPlateau implements Plateau {
 
@@ -11,7 +10,8 @@ public class NurseryPlateau implements Plateau {
     private final int xMax;
     private final int yMax;
 
-    private final Map<Rover, Position> roverPositions = new HashMap();
+    private final List<Rover> rovers = new ArrayList<>();
+    private final Set<Position> takenPositions = new HashSet<>();
 
     public NurseryPlateau(int xMax, int yMax) {
         this.xMax = xMax;
@@ -19,25 +19,64 @@ public class NurseryPlateau implements Plateau {
     }
 
     @Override
-    public void addNewRover(Rover rover, Position startingPosition) {
+    public List<Rover> getRovers() {
+        return rovers;
+    }
+
+    @Override
+    public Rover createNewRover(int x, int y, Orientation orientation) {
+        Position startingPosition = new Position(x,y);
         if (isFull())
-            return;
-        if (isOutOfBounds(startingPosition) || isTaken(startingPosition))
-            addToNextFreePosition(rover, new Position(xMin, yMin));
-        else
-            roverPositions.put(rover, startingPosition);
+            return null;
+        else if(isOutOfBounds(startingPosition) || isTaken(startingPosition))
+            return createRoverAtNextFreePosition(new Position(xMin, yMin), orientation);
+        else{
+            Rover rover = new MarsRover(startingPosition,orientation);
+            takenPositions.add(startingPosition);
+            rovers.add(rover);
+            return rover;
+        }
+    }
+
+    @Override
+    public int getXMax() {
+        return xMax;
+    }
+
+    @Override
+    public int getYMax() {
+        return yMax;
+    }
+
+    @Override
+    public void moveRover(Rover rover) {
+        Position currentPosition = rover.getPosition();
+        Position translation = rover.getMoveTranslation();
+        Position newPosition = Position.translate(currentPosition, translation);
+        if (isOutOfBounds(newPosition))
+            ;//todo: store event
+        else if (isTaken(newPosition))
+            ;//todo: store event
+        else {
+            takenPositions.remove(currentPosition);
+            rover.setPosition(newPosition);
+            takenPositions.add(newPosition);
+        }
+    }
+
+    private Rover createRoverAtNextFreePosition(Position position, Orientation orientation) {
+        if (isTaken(position))
+            return createRoverAtNextFreePosition(incrementPosition(position), orientation);
+        else {
+            Rover rover = new MarsRover(position,orientation);
+            takenPositions.add(position);
+            rovers.add(rover);
+            return rover;
+        }
     }
 
     private boolean isFull() {
-        return  roverPositions.size() == (xMax + 1) * (yMax + 1);
-    }
-
-    private void addToNextFreePosition(Rover rover, Position position) {
-        if (isTaken(position))
-            addToNextFreePosition(rover, incrementPosition(position));
-        else
-            roverPositions.put(rover, position);
-
+        return  takenPositions.size() == (xMax + 1) * (yMax + 1);
     }
 
     private Position incrementPosition(Position position) {
@@ -50,25 +89,8 @@ public class NurseryPlateau implements Plateau {
     }
 
 
-    @Override
-    public void moveRover(Rover rover) {
-        Position translation = rover.getMoveTranslation();
-        Position newPosition = Position.translate(roverPositions.get(rover), translation);
-        if (isOutOfBounds(newPosition))
-            ;//todo: store event
-        else if (isTaken(newPosition))
-            ;//todo: store event
-        else
-            roverPositions.put(rover, newPosition);
-    }
-
-    private boolean isTaken(Position newPosition) {
-        return roverPositions.containsValue(newPosition);
-    }
-
-    @Override
-    public Position getRoverPosition(Rover rover) {
-        return roverPositions.get(rover);
+    private boolean isTaken(Position position) {
+        return takenPositions.contains(position);
     }
 
     private boolean isOutOfBounds(Position position) {

@@ -70,7 +70,7 @@ class PresenterTest {
         ArgumentCaptor<List<Move>> movesCaptor = ArgumentCaptor.forClass(List.class);
 
         Position position = mock(Position.class);
-        when(marsRoverController.getCurrentRoverPosition()).thenReturn(position);
+        when(marsRoverController.getCurrentRover().getPosition()).thenReturn(position);
 
         presenter.executeMovesInput(input);
         verify(marsRoverController).moveCurrentRover(movesCaptor.capture());

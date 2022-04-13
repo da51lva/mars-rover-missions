@@ -1,26 +1,23 @@
 package com.techreturners.marsroverkata.view;
 
-import com.techreturners.marsroverkata.model.Position;
+import com.techreturners.marsroverkata.model.Orientation;
 import com.techreturners.marsroverkata.model.Rover;
 import com.techreturners.marsroverkata.presenter.Presenter;
-import com.techreturners.marsroverkata.model.Orientation;
 
 import java.util.List;
-import java.util.Map;
 import java.util.Scanner;
 
 public class ConsoleView {
-
-    private Presenter presenter;
-
-    public void setPresenter(Presenter presenter) {
-        this.presenter = presenter;
-    }
 
     private static final String s = "+---";
     private static final String s1 = "|   ";
     private static final String s2 = "+";
     private static final String s3 = "|";
+    private Presenter presenter;
+
+    public void setPresenter(Presenter presenter) {
+        this.presenter = presenter;
+    }
 
     public void welcome() {
 
@@ -46,26 +43,26 @@ public class ConsoleView {
         }
 
     }
-    
-    public void displayGrid(int xMin, int yMin, int xMax, int yMax, Map<Rover,Position> roverPositions){
 
-        String rowBorder = s.repeat(xMax+1) + s2 + System.lineSeparator();
-        String row = rowBorder + s1.repeat(xMax+1) + s3 + System.lineSeparator();
+    public void displayGrid(int xMax, int yMax, List<Rover> rovers) {
+
+        String rowBorder = s.repeat(xMax + 1) + s2 + System.lineSeparator();
+        String row = rowBorder + s1.repeat(xMax + 1) + s3 + System.lineSeparator();
         StringBuilder gridBuilder = new StringBuilder().append(row.repeat(yMax + 1)).append(rowBorder);
 
-        for(Map.Entry<Rover,Position> entry : roverPositions.entrySet()){
-            int columns = entry.getValue().getX();
-            int rows = entry.getValue().getY();
+        for (Rover rover : rovers) {
+            int columns = rover.getPosition().getX();
+            int rows = rover.getPosition().getY();
             int yFlipped = yMax - rows;
 
-            int charsPerLine = 2 + 4 * (xMax+1);
+            int charsPerLine = 2 + 4 * (xMax + 1);
             int startingRow = charsPerLine;
             int charsBetweenColumn = 4;
             int startingColumn = 3;
             int linesPerRow = 2;
             int charIndex = startingRow + (yFlipped * (charsPerLine * linesPerRow)) + startingColumn + (charsBetweenColumn * columns);
 
-            gridBuilder.replace(charIndex-1, charIndex , "X");
+            gridBuilder.replace(charIndex - 1, charIndex, "X");
         }
 
         System.out.println(gridBuilder);

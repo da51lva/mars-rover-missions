@@ -1,5 +1,7 @@
 package com.techreturners.marsroverkata.model;
 
+import java.util.Objects;
+
 public class Position {
 
     private int x;
@@ -35,6 +37,11 @@ public class Position {
 
         // Compare x and y valus
         return this.x == p.x && this.y == p.y;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(x, y);
     }
 
     /**

@@ -5,20 +5,17 @@ import com.techreturners.marsroverkata.model.Orientation;
 import com.techreturners.marsroverkata.model.Position;
 import org.junit.jupiter.api.Test;
 
-import java.util.Map;
+import java.util.List;
 
 class ConsoleViewTest {
 
     @Test
     void displayGrid() {
         ConsoleView consoleView = new ConsoleView();
-        consoleView.displayGrid(0, 0, 10, 4, Map.of(
-                new MarsRover(Orientation.N),
-                new Position(0, 0),
-                new MarsRover(Orientation.N),
-                new Position(1, 1),
-                new MarsRover(Orientation.N),
-                new Position(2, 2)
+        consoleView.displayGrid(10, 4, List.of(
+                new MarsRover(new Position(0, 0), Orientation.N),
+                new MarsRover(new Position(1, 1), Orientation.N),
+                new MarsRover(new Position(2, 2), Orientation.N)
         ));
     }
 }
