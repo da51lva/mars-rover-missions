@@ -1,4 +1,4 @@
-package com.techreturners.marsroverkata.model;
+package matt.thewizard.techreturners.marsrovermissions.model;
 
 public class MarsRover implements Rover {
 

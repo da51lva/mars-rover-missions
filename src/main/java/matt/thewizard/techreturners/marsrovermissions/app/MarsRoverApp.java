@@ -1,8 +1,8 @@
-package com.techreturners.marsroverkata.app;
+package matt.thewizard.techreturners.marsrovermissions.app;
 
-import com.techreturners.marsroverkata.model.MarsRoverModel;
-import com.techreturners.marsroverkata.presenter.Presenter;
-import com.techreturners.marsroverkata.view.ConsoleView;
+import matt.thewizard.techreturners.marsrovermissions.model.MarsRoverModel;
+import matt.thewizard.techreturners.marsrovermissions.presenter.Presenter;
+import matt.thewizard.techreturners.marsrovermissions.view.ConsoleView;
 
 public class MarsRoverApp {
 

@@ -1,9 +1,9 @@
-package com.techreturners.marsroverkata.app;
+package matt.thewizard.techreturners.marsrovermissions.app;
 
-import com.techreturners.marsroverkata.model.MarsRoverModel;
-import com.techreturners.marsroverkata.model.Move;
-import com.techreturners.marsroverkata.model.Orientation;
-import com.techreturners.marsroverkata.model.Rover;
+import matt.thewizard.techreturners.marsrovermissions.model.MarsRoverModel;
+import matt.thewizard.techreturners.marsrovermissions.model.Move;
+import matt.thewizard.techreturners.marsrovermissions.model.Orientation;
+import matt.thewizard.techreturners.marsrovermissions.model.Rover;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;

@@ -1,8 +1,8 @@
-package com.techreturners.marsroverkata.view;
+package matt.thewizard.techreturners.marsrovermissions.view;
 
-import com.techreturners.marsroverkata.model.Orientation;
-import com.techreturners.marsroverkata.model.Rover;
-import com.techreturners.marsroverkata.presenter.Presenter;
+import matt.thewizard.techreturners.marsrovermissions.model.Orientation;
+import matt.thewizard.techreturners.marsrovermissions.model.Rover;
+import matt.thewizard.techreturners.marsrovermissions.presenter.Presenter;
 
 import java.util.List;
 import java.util.Scanner;

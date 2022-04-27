@@ -1,10 +1,10 @@
-package com.techreturners.marsroverkata.presenter;
+package matt.thewizard.techreturners.marsrovermissions.presenter;
 
-import com.techreturners.marsroverkata.model.MarsRoverModel;
-import com.techreturners.marsroverkata.model.Move;
-import com.techreturners.marsroverkata.model.Orientation;
-import com.techreturners.marsroverkata.model.Rover;
-import com.techreturners.marsroverkata.view.ConsoleView;
+import matt.thewizard.techreturners.marsrovermissions.model.MarsRoverModel;
+import matt.thewizard.techreturners.marsrovermissions.model.Move;
+import matt.thewizard.techreturners.marsrovermissions.model.Orientation;
+import matt.thewizard.techreturners.marsrovermissions.model.Rover;
+import matt.thewizard.techreturners.marsrovermissions.view.ConsoleView;
 
 import java.util.Arrays;
 import java.util.List;

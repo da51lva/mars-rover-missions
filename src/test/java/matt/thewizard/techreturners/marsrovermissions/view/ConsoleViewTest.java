@@ -1,8 +1,8 @@
-package com.techreturners.marsroverkata.view;
+package matt.thewizard.techreturners.marsrovermissions.view;
 
-import com.techreturners.marsroverkata.model.MarsRover;
-import com.techreturners.marsroverkata.model.Orientation;
-import com.techreturners.marsroverkata.model.Position;
+import matt.thewizard.techreturners.marsrovermissions.model.MarsRover;
+import matt.thewizard.techreturners.marsrovermissions.model.Orientation;
+import matt.thewizard.techreturners.marsrovermissions.model.Position;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
