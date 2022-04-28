@@ -8,7 +8,7 @@ public class MarsRoverApp {
 
     public static void main(String args[]){
         MarsRoverModel marsRoverModel = new MarsRoverModel();
-        ConsoleView consoleView = new ConsoleView();
+        ConsoleView consoleView = new ConsoleView(System.console());
         Presenter presenter = new Presenter(marsRoverModel, consoleView);
         consoleView.setPresenter(presenter);
         consoleView.welcome();

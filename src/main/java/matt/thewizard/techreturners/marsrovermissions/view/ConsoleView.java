@@ -4,6 +4,7 @@ import matt.thewizard.techreturners.marsrovermissions.model.Orientation;
 import matt.thewizard.techreturners.marsrovermissions.model.Rover;
 import matt.thewizard.techreturners.marsrovermissions.presenter.Presenter;
 
+import java.io.Console;
 import java.util.List;
 import java.util.Scanner;
 
@@ -39,7 +40,14 @@ public class ConsoleView {
     private static final String s1 = "|   ";
     private static final String s2 = "+";
     private static final String s3 = "|";
+
     private Presenter presenter;
+
+    public ConsoleView(Console console) {
+        this.console = console;
+    }
+
+    private Console console;
 
     public void setPresenter(Presenter presenter) {
         this.presenter = presenter;
@@ -51,23 +59,22 @@ public class ConsoleView {
 
             System.out.println(WELCOME_MESSAGE);
             System.out.println("Please enter a size for your plateau to start");
-            String input = scanner.nextLine();
+            String input = console.readLine();
             presenter.executePlateauSizeInput(input);
 
             while (true) {
 
                 System.out.println("And now a Rover's start position and orientation");
-                input = scanner.nextLine();
+                input = console.readLine();
                 if (input.equals("q")) break;
                 else presenter.executeNewRoverInput(input);
 
                 System.out.println("And now a list of moves for your Rover");
-                input = scanner.nextLine();
+                input = console.readLine();
                 if (input.equals("q")) break;
                 else presenter.executeMovesInput(input);
             }
         }
-
     }
 
     public void displayGrid(int xMax, int yMax, List<Rover> rovers) {
