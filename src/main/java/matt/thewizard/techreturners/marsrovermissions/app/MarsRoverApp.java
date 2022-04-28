@@ -11,6 +11,7 @@ public class MarsRoverApp {
         ConsoleView consoleView = new ConsoleView(System.console());
         Presenter presenter = new Presenter(marsRoverModel, consoleView);
         consoleView.setPresenter(presenter);
-        consoleView.welcome();
+        //consoleView.welcome();
+        presenter.go();
     }
 }

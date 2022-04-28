@@ -11,30 +11,28 @@ import java.util.Scanner;
 public class ConsoleView {
 
     //ascii text generator 'isometric2' font
-    private static final String WELCOME_MESSAGE = "Welcome to" +
-            "      ___           ___           ___           ___                    ___           ___                         ___           ___     \n" +
-            "     /\\  \\         /\\  \\         /\\  \\         /\\__\\                  /\\  \\         /\\  \\          ___          /\\__\\         /\\  \\    \n" +
-            "    |::\\  \\       /::\\  \\       /::\\  \\       /:/ _/_                /::\\  \\       /::\\  \\        /\\  \\        /:/ _/_       /::\\  \\   \n" +
-            "    |:|:\\  \\     /:/\\:\\  \\     /:/\\:\\__\\     /:/ /\\  \\              /:/\\:\\__\\     /:/\\:\\  \\       \\:\\  \\      /:/ /\\__\\     /:/\\:\\__\\  \n" +
-            "  __|:|\\:\\  \\   /:/ /::\\  \\   /:/ /:/  /    /:/ /::\\  \\            /:/ /:/  /    /:/  \\:\\  \\       \\:\\  \\    /:/ /:/ _/_   /:/ /:/  /  \n" +
-            " /::::|_\\:\\__\\ /:/_/:/\\:\\__\\ /:/_/:/__/___ /:/_/:/\\:\\__\\          /:/_/:/__/___ /:/__/ \\:\\__\\  ___  \\:\\__\\  /:/_/:/ /\\__\\ /:/_/:/__/___\n" +
-            " \\:\\~~\\  \\/__/ \\:\\/:/  \\/__/ \\:\\/:::::/  / \\:\\/:/ /:/  /          \\:\\/:::::/  / \\:\\  \\ /:/  / /\\  \\ |:|  |  \\:\\/:/ /:/  / \\:\\/:::::/  /\n" +
-            "  \\:\\  \\        \\::/__/       \\::/~~/~~~~   \\::/ /:/  /            \\::/~~/~~~~   \\:\\  /:/  /  \\:\\  \\|:|  |   \\::/_/:/  /   \\::/~~/~~~~ \n" +
-            "   \\:\\  \\        \\:\\  \\        \\:\\~~\\        \\/_/:/  /              \\:\\~~\\        \\:\\/:/  /    \\:\\__|:|__|    \\:\\/:/  /     \\:\\~~\\     \n" +
-            "    \\:\\__\\        \\:\\__\\        \\:\\__\\         /:/  /                \\:\\__\\        \\::/  /      \\::::/__/      \\::/  /       \\:\\__\\    \n" +
-            "     \\/__/         \\/__/         \\/__/         \\/__/                  \\/__/         \\/__/        ~~~~           \\/__/         \\/__/" +
-            "" +
-            "      ___                       ___           ___                       ___           ___     \n" +
-            "     /\\  \\                     /\\__\\         /\\__\\                     /\\  \\         /\\  \\    \n" +
-            "    |::\\  \\       ___         /:/ _/_       /:/ _/_       ___         /::\\  \\        \\:\\  \\   \n" +
-            "    |:|:\\  \\     /\\__\\       /:/ /\\  \\     /:/ /\\  \\     /\\__\\       /:/\\:\\  \\        \\:\\  \\  \n" +
-            "  __|:|\\:\\  \\   /:/__/      /:/ /::\\  \\   /:/ /::\\  \\   /:/__/      /:/  \\:\\  \\   _____\\:\\  \\ \n" +
-            " /::::|_\\:\\__\\ /::\\  \\     /:/_/:/\\:\\__\\ /:/_/:/\\:\\__\\ /::\\  \\     /:/__/ \\:\\__\\ /::::::::\\__\\\n" +
-            " \\:\\~~\\  \\/__/ \\/\\:\\  \\__  \\:\\/:/ /:/  / \\:\\/:/ /:/  / \\/\\:\\  \\__  \\:\\  \\ /:/  / \\:\\~~\\~~\\/__/\n" +
-            "  \\:\\  \\        ~~\\:\\/\\__\\  \\::/ /:/  /   \\::/ /:/  /   ~~\\:\\/\\__\\  \\:\\  /:/  /   \\:\\  \\      \n" +
-            "   \\:\\  \\          \\::/  /   \\/_/:/  /     \\/_/:/  /       \\::/  /   \\:\\/:/  /     \\:\\  \\     \n" +
-            "    \\:\\__\\         /:/  /      /:/  /        /:/  /        /:/  /     \\::/  /       \\:\\__\\    \n" +
-            "     \\/__/         \\/__/       \\/__/         \\/__/         \\/__/       \\/__/         \\/__/  ";
+    private static final String WELCOME_MESSAGE = """
+            Welcome to      ___           ___           ___           ___                    ___           ___                         ___           ___    \s
+                 /\\  \\         /\\  \\         /\\  \\         /\\__\\                  /\\  \\         /\\  \\          ___          /\\__\\         /\\  \\   \s
+                |::\\  \\       /::\\  \\       /::\\  \\       /:/ _/_                /::\\  \\       /::\\  \\        /\\  \\        /:/ _/_       /::\\  \\  \s
+                |:|:\\  \\     /:/\\:\\  \\     /:/\\:\\__\\     /:/ /\\  \\              /:/\\:\\__\\     /:/\\:\\  \\       \\:\\  \\      /:/ /\\__\\     /:/\\:\\__\\ \s
+              __|:|\\:\\  \\   /:/ /::\\  \\   /:/ /:/  /    /:/ /::\\  \\            /:/ /:/  /    /:/  \\:\\  \\       \\:\\  \\    /:/ /:/ _/_   /:/ /:/  / \s
+             /::::|_\\:\\__\\ /:/_/:/\\:\\__\\ /:/_/:/__/___ /:/_/:/\\:\\__\\          /:/_/:/__/___ /:/__/ \\:\\__\\  ___  \\:\\__\\  /:/_/:/ /\\__\\ /:/_/:/__/___
+             \\:\\~~\\  \\/__/ \\:\\/:/  \\/__/ \\:\\/:::::/  / \\:\\/:/ /:/  /          \\:\\/:::::/  / \\:\\  \\ /:/  / /\\  \\ |:|  |  \\:\\/:/ /:/  / \\:\\/:::::/  /
+              \\:\\  \\        \\::/__/       \\::/~~/~~~~   \\::/ /:/  /            \\::/~~/~~~~   \\:\\  /:/  /  \\:\\  \\|:|  |   \\::/_/:/  /   \\::/~~/~~~~\s
+               \\:\\  \\        \\:\\  \\        \\:\\~~\\        \\/_/:/  /              \\:\\~~\\        \\:\\/:/  /    \\:\\__|:|__|    \\:\\/:/  /     \\:\\~~\\    \s
+                \\:\\__\\        \\:\\__\\        \\:\\__\\         /:/  /                \\:\\__\\        \\::/  /      \\::::/__/      \\::/  /       \\:\\__\\   \s
+                 \\/__/         \\/__/         \\/__/         \\/__/                  \\/__/         \\/__/        ~~~~           \\/__/         \\/__/      ___                       ___           ___                       ___           ___    \s
+                 /\\  \\                     /\\__\\         /\\__\\                     /\\  \\         /\\  \\   \s
+                |::\\  \\       ___         /:/ _/_       /:/ _/_       ___         /::\\  \\        \\:\\  \\  \s
+                |:|:\\  \\     /\\__\\       /:/ /\\  \\     /:/ /\\  \\     /\\__\\       /:/\\:\\  \\        \\:\\  \\ \s
+              __|:|\\:\\  \\   /:/__/      /:/ /::\\  \\   /:/ /::\\  \\   /:/__/      /:/  \\:\\  \\   _____\\:\\  \\\s
+             /::::|_\\:\\__\\ /::\\  \\     /:/_/:/\\:\\__\\ /:/_/:/\\:\\__\\ /::\\  \\     /:/__/ \\:\\__\\ /::::::::\\__\\
+             \\:\\~~\\  \\/__/ \\/\\:\\  \\__  \\:\\/:/ /:/  / \\:\\/:/ /:/  / \\/\\:\\  \\__  \\:\\  \\ /:/  / \\:\\~~\\~~\\/__/
+              \\:\\  \\        ~~\\:\\/\\__\\  \\::/ /:/  /   \\::/ /:/  /   ~~\\:\\/\\__\\  \\:\\  /:/  /   \\:\\  \\     \s
+               \\:\\  \\          \\::/  /   \\/_/:/  /     \\/_/:/  /       \\::/  /   \\:\\/:/  /     \\:\\  \\    \s
+                \\:\\__\\         /:/  /      /:/  /        /:/  /        /:/  /     \\::/  /       \\:\\__\\   \s
+                 \\/__/         \\/__/       \\/__/         \\/__/         \\/__/       \\/__/         \\/__/ \s""";
 
     private static final String s = "+---";
     private static final String s1 = "|   ";
@@ -43,38 +41,45 @@ public class ConsoleView {
 
     private Presenter presenter;
 
+    private Console console;
+
     public ConsoleView(Console console) {
         this.console = console;
     }
-
-    private Console console;
 
     public void setPresenter(Presenter presenter) {
         this.presenter = presenter;
     }
 
-    public void welcome() {
 
-        try (Scanner scanner = new Scanner(System.in)) {
+    public String displayPlateauInput() {
+        System.out.println("Please enter a size for your plateau to start using the form 'X Y'");
+        System.out.println("e.g. '10 5'");
 
-            System.out.println(WELCOME_MESSAGE);
-            System.out.println("Please enter a size for your plateau to start");
-            String input = console.readLine();
-            presenter.executePlateauSizeInput(input);
+        return console.readLine();
+    }
 
-            while (true) {
+    public String displayAddNewRover() {
+        System.out.println("Enter a starting position and orientation for your new Rover :)");
+        System.out.println("Use the format 'X Y Orientation' e.g. 5 5 N");
+        return console.readLine();
+    }
 
-                System.out.println("And now a Rover's start position and orientation");
-                input = console.readLine();
-                if (input.equals("q")) break;
-                else presenter.executeNewRoverInput(input);
+    public String displayMoveRover() {
+        System.out.println("Enter a List of moves for the selected Rover");
+        System.out.println("M = Move");
+        System.out.println("L = Rotate Left");
+        System.out.println("R = Rotate Right");
+        System.out.println("e.g. 'MMRMLMM' , 'RM' . 'MLLMMM' etc.");
+        return console.readLine();
+    }
 
-                System.out.println("And now a list of moves for your Rover");
-                input = console.readLine();
-                if (input.equals("q")) break;
-                else presenter.executeMovesInput(input);
-            }
-        }
+    public int displayChooseRover() {
+        System.out.println("Please choose from the following options:\n");
+        System.out.println("[1] - Add a new Rover\n");
+        System.out.println("[2] - Move an existing Rover\n");
+
+        return Integer.parseInt(console.readLine());
     }
 
     public void displayGrid(int xMax, int yMax, List<Rover> rovers) {
@@ -101,7 +106,7 @@ public class ConsoleView {
         System.out.println(gridBuilder);
     }
 
-    public void displayResult(int x, int y, Orientation orientation) {
-        System.out.println(String.format("%s %s %s", x, y, orientation));
+    public void displayGoodbye() {
+        System.out.println("Thanks for playing! Goodbye :-)");
     }
 }
