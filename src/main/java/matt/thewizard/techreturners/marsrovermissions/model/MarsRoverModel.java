@@ -6,19 +6,17 @@ public class MarsRoverModel {
 
     private Plateau plateau;
 
-    private Rover currentRover;
-
 
     public void createPlateau(int xMax, int yMax){
         this.plateau = new NurseryPlateau(xMax, yMax);
     }
 
     public void addRover(int x, int y, Orientation orientation) {
-        currentRover = plateau.createNewRover(x, y, orientation);
+        plateau.createNewRover(x, y, orientation);
     }
 
-    public Rover getCurrentRover() {
-        return currentRover;
+    public Rover getRover(int roverId) {
+        return plateau.getRover(roverId);
     }
 
     public List<Rover> getRovers(){
@@ -29,21 +27,22 @@ public class MarsRoverModel {
         return plateau;
     }
 
-    public void moveCurrentRover(List<Move> moves) {
+    public void moveRover(int id, List<Move> moves) {
+        Rover rover = plateau.getRover(id);
         moves.stream()
-                .forEach(this::moveCurrentRover);
+                .forEach((move) -> moveRover(rover,move));
     }
 
-    private void moveCurrentRover(Move move) {
+    private void moveRover(Rover rover, Move move) {
         switch (move) {
             case M:
-                plateau.moveRover(currentRover);
+                plateau.moveRover(rover);
                 break;
             case R:
-                currentRover.orientateRight();
+                rover.orientateRight();
                 break;
             case L:
-                currentRover.orientateLeft();
+                rover.orientateLeft();
                 break;
         }
     }

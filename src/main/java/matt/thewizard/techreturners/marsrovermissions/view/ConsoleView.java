@@ -1,7 +1,6 @@
 package matt.thewizard.techreturners.marsrovermissions.view;
 
 import matt.thewizard.techreturners.marsrovermissions.model.Rover;
-import matt.thewizard.techreturners.marsrovermissions.presenter.Presenter;
 
 import java.io.Console;
 import java.util.List;
@@ -79,12 +78,18 @@ public class ConsoleView {
         return console.readLine();
     }
 
-    public int displayChooseRover() {
+    public String displayChooseOption() {
         System.out.println("Please choose from the following options:\n");
         System.out.println("[1] - Add a new Rover\n");
         System.out.println("[2] - Move an existing Rover\n");
 
-        return Integer.parseInt(console.readLine());
+        return console.readLine();
+    }
+
+    public String displayChooseRover() {
+        System.out.println("Please select a rover to move by entering a number:\n");
+        System.out.println("E.g. '1'");
+        return console.readLine();
     }
 
     public void displayGrid(int xMax, int yMax, List<Rover> rovers) {
@@ -105,7 +110,7 @@ public class ConsoleView {
             int linesPerRow = 2;
             int charIndex = startingRow + (yFlipped * (charsPerLine * linesPerRow)) + startingColumn + (charsBetweenColumn * columns);
 
-            gridBuilder.replace(charIndex - 1, charIndex, "X");
+            gridBuilder.replace(charIndex - 1, charIndex, String.valueOf(rover.getId()));
         }
 
         System.out.println(gridBuilder);

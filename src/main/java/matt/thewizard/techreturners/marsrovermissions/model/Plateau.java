@@ -4,11 +4,13 @@ import java.util.List;
 
 public interface Plateau {
 
+    Rover getRover(int id);
+
     List<Rover> getRovers();
 
     void moveRover(Rover currentRover);
 
-    Rover createNewRover(int x, int y, Orientation orientation);
+    void createNewRover(int x, int y, Orientation orientation);
 
     int getXMax();
 

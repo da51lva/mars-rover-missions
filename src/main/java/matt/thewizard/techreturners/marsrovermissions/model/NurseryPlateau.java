@@ -19,22 +19,26 @@ public class NurseryPlateau implements Plateau {
     }
 
     @Override
+    public Rover getRover(int id) {
+        return rovers.get(id-1);
+    }
+
+    @Override
     public List<Rover> getRovers() {
         return rovers;
     }
 
     @Override
-    public Rover createNewRover(int x, int y, Orientation orientation) {
+    public void createNewRover(int x, int y, Orientation orientation) {
         Position startingPosition = new Position(x,y);
         if (isFull())
-            return null;
+            ; //TODO: store event
         else if(isOutOfBounds(startingPosition) || isTaken(startingPosition))
-            return createRoverAtNextFreePosition(new Position(xMin, yMin), orientation);
+            createRoverAtNextFreePosition(new Position(xMin, yMin), orientation);
         else{
             Rover rover = new MarsRover(startingPosition,orientation);
             takenPositions.add(startingPosition);
             rovers.add(rover);
-            return rover;
         }
     }
 
@@ -64,14 +68,13 @@ public class NurseryPlateau implements Plateau {
         }
     }
 
-    private Rover createRoverAtNextFreePosition(Position position, Orientation orientation) {
+    private void createRoverAtNextFreePosition(Position position, Orientation orientation) {
         if (isTaken(position))
-            return createRoverAtNextFreePosition(incrementPosition(position), orientation);
+            createRoverAtNextFreePosition(incrementPosition(position), orientation);
         else {
             Rover rover = new MarsRover(position,orientation);
             takenPositions.add(position);
             rovers.add(rover);
-            return rover;
         }
     }
 

@@ -2,12 +2,23 @@ package matt.thewizard.techreturners.marsrovermissions.model;
 
 public class MarsRover implements Rover {
 
+    private static int nextId = 1;
+
+    private final int id;
+
     private Position position;
     private Orientation orientation;
 
     public MarsRover(Position position, Orientation orientation) {
+        id = nextId;
+        nextId++;
         this.position = position;
         this.orientation = orientation;
+    }
+
+    @Override
+    public int getId() {
+        return id;
     }
 
     @Override

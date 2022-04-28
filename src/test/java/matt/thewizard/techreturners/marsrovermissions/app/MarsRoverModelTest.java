@@ -33,8 +33,8 @@ class MarsRoverModelTest {
         marsRoverModel.createPlateau(1000, 1000);
         marsRoverModel.addRover(roverStartingX, roverStartingY, Orientation.E);
 
-        marsRoverModel.moveCurrentRover(moves);
-        checkRoverResult(expectedX, expectedY,"E");
+        marsRoverModel.moveRover(1,moves);
+        checkRoverResult(1,expectedX, expectedY,"E");
     }
 
     @ParameterizedTest
@@ -43,8 +43,8 @@ class MarsRoverModelTest {
         marsRoverModel.createPlateau(1000, 1000);
         marsRoverModel.addRover(roverStartingX, roverStartingY, startingOrientation);
 
-        marsRoverModel.moveCurrentRover(moves);
-        checkRoverResult(expectedX, expectedY,startingOrientation.toString());
+        marsRoverModel.moveRover(1,moves);
+        checkRoverResult(1,expectedX, expectedY,startingOrientation.toString());
     }
 
     @ParameterizedTest
@@ -54,38 +54,38 @@ class MarsRoverModelTest {
         marsRoverModel.createPlateau(1000, 1000);
         marsRoverModel.addRover(roverStartingX, roverStartingY, startingOrientation);
 
-        marsRoverModel.moveCurrentRover(moves);
-        checkRoverResult(expectedX,expectedY,expectedOrientation.toString());
+        marsRoverModel.moveRover(1,moves);
+        checkRoverResult(1,expectedX,expectedY,expectedOrientation.toString());
     }
 
     @ParameterizedTest
     @CsvFileSource(resources = "/model/single-rover-all-moves.csv", numLinesToSkip = 1)
     public void testSingleRoverWithLRAndMMovesWithinLargePlateau(int roverStartingX, int roverStartingY, String startingOrientation, String moves, int expectedX, int expectedY, String expectedOrientation) {
-        takeFullTurn(1000, 1000, roverStartingX, roverStartingY, startingOrientation, moves);
-        checkRoverResult(expectedX, expectedY, expectedOrientation);
+        takeFullTurn(1,1000, 1000, roverStartingX, roverStartingY, startingOrientation, moves);
+        checkRoverResult(1,expectedX, expectedY, expectedOrientation);
     }
 
     @ParameterizedTest
     @CsvFileSource(resources = "/model/single-rover-moving-out-of-nursery-plateau.csv", numLinesToSkip = 1)
     public void testSingleRoverMovingOutOfNurseryPlateau(int expectedX, int expectedY, String expectedOrientation, int xMax, int yMax, int roverStartingX, int roverStartingY, String startingOrientation, String moves) {
-        takeFullTurn(xMax, yMax, roverStartingX, roverStartingY, startingOrientation, moves);
-        checkRoverResult(expectedX, expectedY, expectedOrientation);
+        takeFullTurn(1, xMax, yMax, roverStartingX, roverStartingY, startingOrientation, moves);
+        checkRoverResult(1, expectedX, expectedY, expectedOrientation);
     }
 
     @ParameterizedTest
     @CsvFileSource(resources = "/model/second-rover-input.csv", numLinesToSkip = 1)
     public void testSecondRoverWithinNurseryPlateau(int rover1X, int rover1Y, String rover1Orientation, String rover1Moves, int rover2X, int rover2Y, String rover2Orientation, String rover2Moves, int rover2ExpectedX, int rover2ExpectedY, String rover2ExpectedOrientation) {
-        takeFullTurn(1000, 1000, rover1X, rover1Y, rover1Orientation, rover1Moves);
-        takeRoverTurn(rover2X, rover2Y, rover2Orientation, rover2Moves);
-        checkRoverResult(rover2ExpectedX, rover2ExpectedY, rover2ExpectedOrientation);
+        takeFullTurn(1,1000, 1000, rover1X, rover1Y, rover1Orientation, rover1Moves);
+        takeRoverTurn(2,rover2X, rover2Y, rover2Orientation, rover2Moves);
+        checkRoverResult(2,rover2ExpectedX, rover2ExpectedY, rover2ExpectedOrientation);
     }
 
     @ParameterizedTest
     @CsvFileSource(resources = "/model/second-rover-collision.csv", numLinesToSkip = 1)
     public void testSecondRoverBumpingIntoFirstWithinNurseryPlateau(int rover2X, int rover2Y, String rover2Orientation, String rover2Moves, int rover2ExpectedX, int rover2ExpectedY, String rover2ExpectedOrientation) {
-        takeFullTurn(1000, 1000, 5, 5, "N", "L");
-        takeRoverTurn(rover2X, rover2Y, rover2Orientation, rover2Moves);
-        checkRoverResult(rover2ExpectedX, rover2ExpectedY, rover2ExpectedOrientation);
+        takeFullTurn(1,1000, 1000, 5, 5, "N", "L");
+        takeRoverTurn(2,rover2X, rover2Y, rover2Orientation, rover2Moves);
+        checkRoverResult(2,rover2ExpectedX, rover2ExpectedY, rover2ExpectedOrientation);
     }
 
     @ParameterizedTest
@@ -93,7 +93,7 @@ class MarsRoverModelTest {
     public void testRoverStartingPositionOutOfNurseryPlateau(int x, int y) {
         marsRoverModel.createPlateau(10, 10);
         marsRoverModel.addRover(x, y, Orientation.N);
-        checkRoverResult(0, 0, "N");
+        checkRoverResult(1,0, 0, "N");
     }
 
     @ParameterizedTest
@@ -107,7 +107,7 @@ class MarsRoverModelTest {
                 });
 
         marsRoverModel.addRover(lastX, lastY, Orientation.N);
-        checkRoverResult(expectedX, expectedY, "N");
+        checkRoverResult(marsRoverModel.getRovers().size(),expectedX, expectedY, "N");
     }
 
     @ParameterizedTest
@@ -121,21 +121,21 @@ class MarsRoverModelTest {
                 });
 
         marsRoverModel.addRover(0, 0, Orientation.N);
-        assertEquals(marsRoverModel.getCurrentRover(), null);
+        assertEquals((xMax+1) * (yMax + 1),marsRoverModel.getRovers().size());
     }
 
-    private void takeFullTurn(int xMax, int yMax, int x, int y, String orientation, String moves) {
+    private void takeFullTurn(int roverId, int xMax, int yMax, int x, int y, String orientation, String moves) {
         marsRoverModel.createPlateau(xMax, yMax);
-        takeRoverTurn(x, y, orientation, moves);
+        takeRoverTurn(roverId, x, y, orientation, moves);
     }
 
-    private void takeRoverTurn(int x, int y, String orientation, String moves) {
+    private void takeRoverTurn(int roverId, int x, int y, String orientation, String moves) {
         marsRoverModel.addRover(x, y, Orientation.valueOf(orientation));
-        marsRoverModel.moveCurrentRover(toListOfMoves(moves));
+        marsRoverModel.moveRover(roverId,toListOfMoves(moves));
     }
 
-    private void checkRoverResult(int expectedX, int expectedY, String expectedOrientation) {
-        Rover rover = marsRoverModel.getCurrentRover();
+    private void checkRoverResult(int roverId, int expectedX, int expectedY, String expectedOrientation) {
+        Rover rover = marsRoverModel.getRover(roverId);
         assertEquals(expectedX, rover.getPosition().getX());
         assertEquals(expectedY, rover.getPosition().getY());
         assertEquals(Orientation.valueOf(expectedOrientation), rover.getOrientation());
@@ -146,7 +146,7 @@ class MarsRoverModelTest {
     //Todo: empty move list
 
     /**
-     * Converts a list of moves represented as String to a List of Enumerations Move
+     *Converts a list of moves represented as String to a List of Enumerations Move
      */
     private List<Move> toListOfMoves(String input) {
         return Arrays.stream(input.split(""))
