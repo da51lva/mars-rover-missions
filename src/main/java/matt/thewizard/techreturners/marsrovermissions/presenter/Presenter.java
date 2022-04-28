@@ -24,6 +24,9 @@ public class Presenter {
      * Controls the flow of the application.
      */
     public void go(){
+
+        consoleView.displayWelcome();
+
         //accept an input for the Plateau size
         String plateauInput = consoleView.displayPlateauInput();
         executePlateauSizeInput(plateauInput);

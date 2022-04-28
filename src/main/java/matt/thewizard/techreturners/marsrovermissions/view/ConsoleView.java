@@ -1,18 +1,16 @@
 package matt.thewizard.techreturners.marsrovermissions.view;
 
-import matt.thewizard.techreturners.marsrovermissions.model.Orientation;
 import matt.thewizard.techreturners.marsrovermissions.model.Rover;
 import matt.thewizard.techreturners.marsrovermissions.presenter.Presenter;
 
 import java.io.Console;
 import java.util.List;
-import java.util.Scanner;
 
 public class ConsoleView {
 
     //ascii text generator 'isometric2' font
-    private static final String WELCOME_MESSAGE = """
-            Welcome to      ___           ___           ___           ___                    ___           ___                         ___           ___    \s
+    private static final String MARS_ROVER_MESSAGE = """
+                  ___           ___           ___           ___                    ___           ___                         ___           ___    \s
                  /\\  \\         /\\  \\         /\\  \\         /\\__\\                  /\\  \\         /\\  \\          ___          /\\__\\         /\\  \\   \s
                 |::\\  \\       /::\\  \\       /::\\  \\       /:/ _/_                /::\\  \\       /::\\  \\        /\\  \\        /:/ _/_       /::\\  \\  \s
                 |:|:\\  \\     /:/\\:\\  \\     /:/\\:\\__\\     /:/ /\\  \\              /:/\\:\\__\\     /:/\\:\\  \\       \\:\\  \\      /:/ /\\__\\     /:/\\:\\__\\ \s
@@ -22,24 +20,29 @@ public class ConsoleView {
               \\:\\  \\        \\::/__/       \\::/~~/~~~~   \\::/ /:/  /            \\::/~~/~~~~   \\:\\  /:/  /  \\:\\  \\|:|  |   \\::/_/:/  /   \\::/~~/~~~~\s
                \\:\\  \\        \\:\\  \\        \\:\\~~\\        \\/_/:/  /              \\:\\~~\\        \\:\\/:/  /    \\:\\__|:|__|    \\:\\/:/  /     \\:\\~~\\    \s
                 \\:\\__\\        \\:\\__\\        \\:\\__\\         /:/  /                \\:\\__\\        \\::/  /      \\::::/__/      \\::/  /       \\:\\__\\   \s
-                 \\/__/         \\/__/         \\/__/         \\/__/                  \\/__/         \\/__/        ~~~~           \\/__/         \\/__/      ___                       ___           ___                       ___           ___    \s
-                 /\\  \\                     /\\__\\         /\\__\\                     /\\  \\         /\\  \\   \s
-                |::\\  \\       ___         /:/ _/_       /:/ _/_       ___         /::\\  \\        \\:\\  \\  \s
-                |:|:\\  \\     /\\__\\       /:/ /\\  \\     /:/ /\\  \\     /\\__\\       /:/\\:\\  \\        \\:\\  \\ \s
-              __|:|\\:\\  \\   /:/__/      /:/ /::\\  \\   /:/ /::\\  \\   /:/__/      /:/  \\:\\  \\   _____\\:\\  \\\s
-             /::::|_\\:\\__\\ /::\\  \\     /:/_/:/\\:\\__\\ /:/_/:/\\:\\__\\ /::\\  \\     /:/__/ \\:\\__\\ /::::::::\\__\\
-             \\:\\~~\\  \\/__/ \\/\\:\\  \\__  \\:\\/:/ /:/  / \\:\\/:/ /:/  / \\/\\:\\  \\__  \\:\\  \\ /:/  / \\:\\~~\\~~\\/__/
-              \\:\\  \\        ~~\\:\\/\\__\\  \\::/ /:/  /   \\::/ /:/  /   ~~\\:\\/\\__\\  \\:\\  /:/  /   \\:\\  \\     \s
-               \\:\\  \\          \\::/  /   \\/_/:/  /     \\/_/:/  /       \\::/  /   \\:\\/:/  /     \\:\\  \\    \s
-                \\:\\__\\         /:/  /      /:/  /        /:/  /        /:/  /     \\::/  /       \\:\\__\\   \s
-                 \\/__/         \\/__/       \\/__/         \\/__/         \\/__/       \\/__/         \\/__/ \s""";
+                 \\/__/         \\/__/         \\/__/         \\/__/                  \\/__/         \\/__/        ~~~~           \\/__/         \\/__/   \s
+                        
+            """;
+
+    private static final String MISSIONS_MESSAGE = """
+                                           ___                       ___           ___                       ___           ___    \s
+                                          /\\  \\                     /\\__\\         /\\__\\                     /\\  \\         /\\  \\   \s
+                                         |::\\  \\       ___         /:/ _/_       /:/ _/_       ___         /::\\  \\        \\:\\  \\  \s
+                                         |:|:\\  \\     /\\__\\       /:/ /\\  \\     /:/ /\\  \\     /\\__\\       /:/\\:\\  \\        \\:\\  \\ \s
+                                       __|:|\\:\\  \\   /:/__/      /:/ /::\\  \\   /:/ /::\\  \\   /:/__/      /:/  \\:\\  \\   _____\\:\\  \\\s
+                                      /::::|_\\:\\__\\ /::\\  \\     /:/_/:/\\:\\__\\ /:/_/:/\\:\\__\\ /::\\  \\     /:/__/ \\:\\__\\ /::::::::\\__\\
+                                      \\:\\~~\\  \\/__/ \\/\\:\\  \\__  \\:\\/:/ /:/  / \\:\\/:/ /:/  / \\/\\:\\  \\__  \\:\\  \\ /:/  / \\:\\~~\\~~\\/__/
+                                       \\:\\  \\        ~~\\:\\/\\__\\  \\::/ /:/  /   \\::/ /:/  /   ~~\\:\\/\\__\\  \\:\\  /:/  /   \\:\\  \\     \s
+                                        \\:\\  \\          \\::/  /   \\/_/:/  /     \\/_/:/  /       \\::/  /   \\:\\/:/  /     \\:\\  \\    \s
+                                         \\:\\__\\         /:/  /      /:/  /        /:/  /        /:/  /     \\::/  /       \\:\\__\\   \s
+                                          \\/__/         \\/__/       \\/__/         \\/__/         \\/__/       \\/__/         \\/__/   \s
+            
+            """;
 
     private static final String s = "+---";
     private static final String s1 = "|   ";
     private static final String s2 = "+";
     private static final String s3 = "|";
-
-    private Presenter presenter;
 
     private Console console;
 
@@ -47,10 +50,12 @@ public class ConsoleView {
         this.console = console;
     }
 
-    public void setPresenter(Presenter presenter) {
-        this.presenter = presenter;
+    public void displayWelcome(){
+        System.out.println("----------------------------------------------------------   Welcome to the   ----------------------------------------------------------");
+        System.out.println(MARS_ROVER_MESSAGE);
+        System.out.println(MISSIONS_MESSAGE);
+        System.out.println("----------------------------------------------------------------------------------------------------------------------------------------");
     }
-
 
     public String displayPlateauInput() {
         System.out.println("Please enter a size for your plateau to start using the form 'X Y'");
