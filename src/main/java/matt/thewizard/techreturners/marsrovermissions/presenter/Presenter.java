@@ -28,11 +28,11 @@ public class Presenter {
         consoleView.displayWelcome();
 
         //accept an input for the Plateau size
-        String plateauInput = consoleView.displayPlateauInput();
-        executePlateauSizeInput(plateauInput);
+        String input = consoleView.displayPlateauInput();
+        validateInput(input);
+        executePlateauSizeInput(input);
         consoleView.displayGrid(marsRoverModel.getPlateau().getXMax(),marsRoverModel.getPlateau().getYMax(),marsRoverModel.getRovers());
 
-        String input = "";
         while(true){
             //Add a new rover
             input = consoleView.displayAddNewRover();
@@ -46,6 +46,8 @@ public class Presenter {
             executeMovesInput(input);
             consoleView.displayGrid(marsRoverModel.getPlateau().getXMax(),marsRoverModel.getPlateau().getYMax(),marsRoverModel.getRovers());
         }
+
+
     }
 
     public void validateInput(String input){
