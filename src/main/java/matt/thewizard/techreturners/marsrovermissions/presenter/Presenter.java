@@ -11,6 +11,7 @@ import java.util.stream.Collectors;
 
 import static matt.thewizard.techreturners.marsrovermissions.presenter.InputConstants.QUIT_CHAR;
 import static matt.thewizard.techreturners.marsrovermissions.presenter.InputValidator.isValidCreatePlateauInput;
+import static matt.thewizard.techreturners.marsrovermissions.presenter.InputValidator.isValidOptionsInput;
 
 public class Presenter {
 
@@ -32,27 +33,16 @@ public class Presenter {
         //accept an input for the Plateau size
         presentCreatePlateau();
 
-        while (true) {
-
-            String input = consoleView.displayChooseOption();
-            checkQuit(input);
-            int option = Integer.parseInt(input);
-            if (option == 1) {
-                addNewRover();
-            } else if (option == 2) {
-                moveExistingRover();
-            }
-
-        }
+        presentRoverOptions();
     }
-
+    
     private void presentCreatePlateau() {
 
         String input = consoleView.displayPlateauInput();
         boolean isValidInput = isValidCreatePlateauInput(input);
 
         while (isValidInput == false) {
-            ConsoleView.displayErrorMessage(String.format("'%s' is not a valid input: Please try again", input));
+            ConsoleView.displayInputErrorMessage(input);
             input = consoleView.displayPlateauInput();
             isValidInput = isValidCreatePlateauInput(input);
         }
@@ -66,6 +56,28 @@ public class Presenter {
                 marsRoverModel.getRovers()
         );
 
+    }
+
+    private void presentRoverOptions(){
+        while(true){
+
+            String input = consoleView.displayChooseOption();
+            boolean isValidInput = isValidOptionsInput(input);
+
+            while(isValidInput == false){
+                ConsoleView.displayInputErrorMessage(input);
+                input = consoleView.displayChooseOption();
+                isValidInput = isValidOptionsInput(input);
+            }
+
+            checkQuit(input);
+            int option = Integer.parseInt(input);
+            if (option == 1) {
+                addNewRover();
+            } else if (option == 2) {
+                moveExistingRover();
+            }
+        }
     }
 
 

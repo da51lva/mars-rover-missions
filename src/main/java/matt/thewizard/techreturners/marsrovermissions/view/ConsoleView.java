@@ -85,8 +85,8 @@ public class ConsoleView {
         System.out.println("\nThanks for playing! Goodbye :-)");
     }
 
-    public static void displayErrorMessage(String message) {
-        System.err.println(message);
+    public static void displayInputErrorMessage(String input) {
+        System.err.println(String.format("'%s' is not a valid input: Please try again", input));
     }
 
     /**

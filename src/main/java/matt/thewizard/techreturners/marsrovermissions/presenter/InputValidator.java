@@ -2,11 +2,12 @@ package matt.thewizard.techreturners.marsrovermissions.presenter;
 
 import java.util.Arrays;
 
-import static matt.thewizard.techreturners.marsrovermissions.presenter.InputConstants.QUIT_CHAR;
-import static matt.thewizard.techreturners.marsrovermissions.presenter.InputConstants.SEPARATOR;
+import static matt.thewizard.techreturners.marsrovermissions.presenter.InputConstants.*;
 
+/**
+ * Validates user inputs
+ */
 public class InputValidator {
-
 
     /**
      * Returns whether an input to Create a Plateau is valid
@@ -27,6 +28,14 @@ public class InputValidator {
 
         return true;
 
+    }
+
+    /**
+     * Returns whether and input to select an option is valid
+     */
+    public static boolean isValidOptionsInput(String input){
+        if(!input.equals(OPTION_1) && !input.equals(OPTION_2) && !input.equals(QUIT_CHAR)) return false;
+        else return true;
     }
 
 }
