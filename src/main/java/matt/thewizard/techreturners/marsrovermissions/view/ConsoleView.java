@@ -7,41 +7,6 @@ import java.util.List;
 
 public class ConsoleView {
 
-    //ascii text generator 'isometric2' font
-    private static final String MARS_ROVER_MESSAGE = """
-                  ___           ___           ___           ___                    ___           ___                         ___           ___    \s
-                 /\\  \\         /\\  \\         /\\  \\         /\\__\\                  /\\  \\         /\\  \\          ___          /\\__\\         /\\  \\   \s
-                |::\\  \\       /::\\  \\       /::\\  \\       /:/ _/_                /::\\  \\       /::\\  \\        /\\  \\        /:/ _/_       /::\\  \\  \s
-                |:|:\\  \\     /:/\\:\\  \\     /:/\\:\\__\\     /:/ /\\  \\              /:/\\:\\__\\     /:/\\:\\  \\       \\:\\  \\      /:/ /\\__\\     /:/\\:\\__\\ \s
-              __|:|\\:\\  \\   /:/ /::\\  \\   /:/ /:/  /    /:/ /::\\  \\            /:/ /:/  /    /:/  \\:\\  \\       \\:\\  \\    /:/ /:/ _/_   /:/ /:/  / \s
-             /::::|_\\:\\__\\ /:/_/:/\\:\\__\\ /:/_/:/__/___ /:/_/:/\\:\\__\\          /:/_/:/__/___ /:/__/ \\:\\__\\  ___  \\:\\__\\  /:/_/:/ /\\__\\ /:/_/:/__/___
-             \\:\\~~\\  \\/__/ \\:\\/:/  \\/__/ \\:\\/:::::/  / \\:\\/:/ /:/  /          \\:\\/:::::/  / \\:\\  \\ /:/  / /\\  \\ |:|  |  \\:\\/:/ /:/  / \\:\\/:::::/  /
-              \\:\\  \\        \\::/__/       \\::/~~/~~~~   \\::/ /:/  /            \\::/~~/~~~~   \\:\\  /:/  /  \\:\\  \\|:|  |   \\::/_/:/  /   \\::/~~/~~~~\s
-               \\:\\  \\        \\:\\  \\        \\:\\~~\\        \\/_/:/  /              \\:\\~~\\        \\:\\/:/  /    \\:\\__|:|__|    \\:\\/:/  /     \\:\\~~\\    \s
-                \\:\\__\\        \\:\\__\\        \\:\\__\\         /:/  /                \\:\\__\\        \\::/  /      \\::::/__/      \\::/  /       \\:\\__\\   \s
-                 \\/__/         \\/__/         \\/__/         \\/__/                  \\/__/         \\/__/        ~~~~           \\/__/         \\/__/   \s
-                        
-            """;
-
-    private static final String MISSIONS_MESSAGE = """
-                                           ___                       ___           ___                       ___           ___    \s
-                                          /\\  \\                     /\\__\\         /\\__\\                     /\\  \\         /\\  \\   \s
-                                         |::\\  \\       ___         /:/ _/_       /:/ _/_       ___         /::\\  \\        \\:\\  \\  \s
-                                         |:|:\\  \\     /\\__\\       /:/ /\\  \\     /:/ /\\  \\     /\\__\\       /:/\\:\\  \\        \\:\\  \\ \s
-                                       __|:|\\:\\  \\   /:/__/      /:/ /::\\  \\   /:/ /::\\  \\   /:/__/      /:/  \\:\\  \\   _____\\:\\  \\\s
-                                      /::::|_\\:\\__\\ /::\\  \\     /:/_/:/\\:\\__\\ /:/_/:/\\:\\__\\ /::\\  \\     /:/__/ \\:\\__\\ /::::::::\\__\\
-                                      \\:\\~~\\  \\/__/ \\/\\:\\  \\__  \\:\\/:/ /:/  / \\:\\/:/ /:/  / \\/\\:\\  \\__  \\:\\  \\ /:/  / \\:\\~~\\~~\\/__/
-                                       \\:\\  \\        ~~\\:\\/\\__\\  \\::/ /:/  /   \\::/ /:/  /   ~~\\:\\/\\__\\  \\:\\  /:/  /   \\:\\  \\     \s
-                                        \\:\\  \\          \\::/  /   \\/_/:/  /     \\/_/:/  /       \\::/  /   \\:\\/:/  /     \\:\\  \\    \s
-                                         \\:\\__\\         /:/  /      /:/  /        /:/  /        /:/  /     \\::/  /       \\:\\__\\   \s
-                                          \\/__/         \\/__/       \\/__/         \\/__/         \\/__/       \\/__/         \\/__/   \s
-            
-            """;
-
-    private static final String s = "+---";
-    private static final String s1 = "|   ";
-    private static final String s2 = "+";
-    private static final String s3 = "|";
 
     private Console console;
 
@@ -49,37 +14,37 @@ public class ConsoleView {
         this.console = console;
     }
 
-    public void displayWelcome(){
-        System.out.println("----------------------------------------------------------   Welcome to the   ----------------------------------------------------------");
-        System.out.println(MARS_ROVER_MESSAGE);
-        System.out.println(MISSIONS_MESSAGE);
-        System.out.println("----------------------------------------------------------------------------------------------------------------------------------------");
+    public void displayWelcome() {
+        System.out.println(ViewComponents.WELCOME_TOP_LINE_MESSAGE);
+        System.out.println(ViewComponents.MARS_ROVER_MESSAGE);
+        System.out.println(ViewComponents.MISSIONS_MESSAGE);
+        System.out.println(ViewComponents.WELCOME_BOTTOM_LINE_MESSAGE);
     }
 
     public String displayPlateauInput() {
-        System.out.println("Please enter a size for your plateau to start using the form 'X Y'");
-        System.out.println("e.g. '10 5'");
+        System.out.println("\nPlease enter a size for your plateau to start using the form 'X Y'\n");
+        System.out.println("e.g. '10 5'\n");
 
         return console.readLine();
     }
 
     public String displayAddNewRover() {
-        System.out.println("Enter a starting position and orientation for your new Rover :)");
-        System.out.println("Use the format 'X Y Orientation' e.g. 5 5 N");
+        System.out.println("\nEnter a starting position and orientation for your new Rover :)\n");
+        System.out.println("Use the format 'X Y Orientation' e.g. 5 5 N\n");
         return console.readLine();
     }
 
     public String displayMoveRover() {
-        System.out.println("Enter a List of moves for the selected Rover");
-        System.out.println("M = Move");
-        System.out.println("L = Rotate Left");
-        System.out.println("R = Rotate Right");
-        System.out.println("e.g. 'MMRMLMM' , 'RM' . 'MLLMMM' etc.");
+        System.out.println("\nEnter a List of moves for the selected Rover\n");
+        System.out.println(ViewComponents.INDENT+"M = Move");
+        System.out.println(ViewComponents.INDENT+"L = Rotate Left");
+        System.out.println(ViewComponents.INDENT+"R = Rotate Right\n");
+        System.out.println("e.g. 'MMRMLMM' , 'RM' . 'MLLMMM' etc.\n");
         return console.readLine();
     }
 
     public String displayChooseOption() {
-        System.out.println("Please choose from the following options:\n");
+        System.out.println("\nPlease choose from the following options:\n");
         System.out.println("[1] - Add a new Rover\n");
         System.out.println("[2] - Move an existing Rover\n");
 
@@ -87,36 +52,92 @@ public class ConsoleView {
     }
 
     public String displayChooseRover() {
-        System.out.println("Please select a rover to move by entering a number:\n");
-        System.out.println("E.g. '1'");
+        System.out.println("\nPlease select a rover to move by entering a number:\n");
+        System.out.println("E.g. '1'\n");
         return console.readLine();
     }
 
+
     public void displayGrid(int xMax, int yMax, List<Rover> rovers) {
 
-        String rowBorder = s.repeat(xMax + 1) + s2 + System.lineSeparator();
-        String row = rowBorder + s1.repeat(xMax + 1) + s3 + System.lineSeparator();
-        StringBuilder gridBuilder = new StringBuilder().append(row.repeat(yMax + 1)).append(rowBorder);
+        String rowBorder = //builds the separator between rows
+                ViewComponents.GRID_COMPONENT_1.repeat(xMax + 1)
+                        + ViewComponents.GRID_COMPONENT_3
+                        + System.lineSeparator();
 
-        for (Rover rover : rovers) {
-            int columns = rover.getPosition().getX();
-            int rows = rover.getPosition().getY();
-            int yFlipped = yMax - rows;
+        String row = //a single row of the grid
+                rowBorder
+                        + (ViewComponents.GRID_COMPONENT_2.repeat(xMax + 1)
+                        + ViewComponents.GRID_COMPONENT_4
+                        + System.lineSeparator()).repeat(ViewComponents.BOX_HEIGHT);
 
-            int charsPerLine = 2 + 4 * (xMax + 1);
-            int startingRow = charsPerLine;
-            int charsBetweenColumn = 4;
-            int startingColumn = 3;
-            int linesPerRow = 2;
-            int charIndex = startingRow + (yFlipped * (charsPerLine * linesPerRow)) + startingColumn + (charsBetweenColumn * columns);
+        StringBuilder gridBuilder = //fully constructed grid
+                new StringBuilder().append(row.repeat(yMax + 1)).append(rowBorder);
 
-            gridBuilder.replace(charIndex - 1, charIndex, String.valueOf(rover.getId()));
-        }
+        //Replace characters in grid that represent rover positions and orientations
+        rovers.stream()
+                .forEach((r) -> replaceChars(r, gridBuilder, rowBorder, yMax));
 
         System.out.println(gridBuilder);
     }
 
     public void displayGoodbye() {
-        System.out.println("Thanks for playing! Goodbye :-)");
+        System.out.println("\nThanks for playing! Goodbye :-)");
     }
+
+    /**
+     * Replaces the characters in a grid which represent a given rover and its orientation
+     * @param rover
+     * @param gridBuilder - the grid being built
+     * @param rowBorder - the separator between rows in the grid. Used to determine the number of characters per line
+     * @param yMax - the vertical size of the grid.
+     */
+    private void replaceChars(Rover rover, StringBuilder gridBuilder, String rowBorder, int yMax) {
+
+        int charIndexOfRover = getCharIndexToReplace(rover, rowBorder, yMax);
+
+        //calculates index of orientation symbol
+        String orientationSymbol = "";
+        int orientationOffset = 0;
+        switch (rover.getOrientation()) {
+            case N -> {
+                orientationSymbol = "^";
+                orientationOffset = charIndexOfRover - rowBorder.length();
+            }
+            case S -> {
+                orientationSymbol = "v";
+                orientationOffset = charIndexOfRover + rowBorder.length();
+            }
+            case E -> {
+                orientationSymbol = ">";
+                orientationOffset = charIndexOfRover + 2;
+            }
+            case W -> {
+                orientationSymbol = "<";
+                orientationOffset = charIndexOfRover - 2;
+            }
+        }
+
+        gridBuilder.replace(charIndexOfRover, charIndexOfRover + 1, String.valueOf(rover.getId()));
+        gridBuilder.replace(orientationOffset, orientationOffset + 1, orientationSymbol);
+
+
+    }
+
+    /**
+     * Calculates the char index that represent a given rover in the grid
+     */
+    private int getCharIndexToReplace(Rover rover, String rowBorder, int yMax) {
+        int columns = rover.getPosition().getX();
+        int rows = rover.getPosition().getY();
+        int yFlipped = yMax - rows;
+
+        int charsPerLine = rowBorder.length();
+        int startingRow = charsPerLine * (ViewComponents.BOX_HEIGHT + 1) / 2;
+        int charsBetweenColumn = ViewComponents.GRID_COMPONENT_1.length();
+        int startingColumn = ViewComponents.GRID_COMPONENT_1.length() / 2 + 1;
+        int linesPerRow = ViewComponents.BOX_HEIGHT + 1;
+        return (startingRow + (yFlipped * (charsPerLine * linesPerRow)) + startingColumn + (charsBetweenColumn * columns)) - 1;
+    }
+
 }
