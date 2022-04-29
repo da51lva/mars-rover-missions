@@ -9,6 +9,9 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static matt.thewizard.techreturners.marsrovermissions.presenter.InputConstants.QUIT_CHAR;
+import static matt.thewizard.techreturners.marsrovermissions.presenter.InputValidator.isValidCreatePlateauInput;
+
 public class Presenter {
 
     private MarsRoverModel marsRoverModel;
@@ -27,18 +30,12 @@ public class Presenter {
         consoleView.displayWelcome();
 
         //accept an input for the Plateau size
-        String input = consoleView.displayPlateauInput();
-        validateInput(input);
-        executePlateauSizeInput(input);
-        consoleView.displayGrid(marsRoverModel.getPlateau().getXMax(),
-                                marsRoverModel.getPlateau().getYMax(),
-                                marsRoverModel.getRovers());
-
+        presentCreatePlateau();
 
         while (true) {
 
-            input = consoleView.displayChooseOption();
-            validateInput(input);
+            String input = consoleView.displayChooseOption();
+            checkQuit(input);
             int option = Integer.parseInt(input);
             if (option == 1) {
                 addNewRover();
@@ -49,36 +46,61 @@ public class Presenter {
         }
     }
 
+    private void presentCreatePlateau() {
+
+        String input = consoleView.displayPlateauInput();
+        boolean isValidInput = isValidCreatePlateauInput(input);
+
+        while (isValidInput == false) {
+            ConsoleView.displayErrorMessage(String.format("'%s' is not a valid input: Please try again", input));
+            input = consoleView.displayPlateauInput();
+            isValidInput = isValidCreatePlateauInput(input);
+        }
+
+        checkQuit(input);
+        executePlateauSizeInput(input);
+
+        consoleView.displayGrid(
+                marsRoverModel.getPlateau().getXMax(),
+                marsRoverModel.getPlateau().getYMax(),
+                marsRoverModel.getRovers()
+        );
+
+    }
+
+
     private void moveExistingRover() {
 
         String input = consoleView.displayChooseRover();
-        validateInput(input);
+        checkQuit(input);
         int roverId = Integer.parseInt(input);
         //TODO: Display grid with highlight
 
         //Move rover
         input = consoleView.displayMoveRover();
-        validateInput(input);
-        executeMovesInput(roverId,input);
-        consoleView.displayGrid(marsRoverModel.getPlateau().getXMax(),
-                                marsRoverModel.getPlateau().getYMax(),
-                                marsRoverModel.getRovers());
+        checkQuit(input);
+        executeMovesInput(roverId, input);
+        consoleView.displayGrid(
+                marsRoverModel.getPlateau().getXMax(),
+                marsRoverModel.getPlateau().getYMax(),
+                marsRoverModel.getRovers()
+        );
     }
 
     private void addNewRover() {
         String input = consoleView.displayAddNewRover();
-        validateInput(input);
+        checkQuit(input);
         executeNewRoverInput(input);
-        consoleView.displayGrid(marsRoverModel.getPlateau().getXMax(),
-                                marsRoverModel.getPlateau().getYMax(),
-                                marsRoverModel.getRovers());
+        consoleView.displayGrid(
+                marsRoverModel.getPlateau().getXMax(),
+                marsRoverModel.getPlateau().getYMax(),
+                marsRoverModel.getRovers()
+        );
     }
 
 
-    private void validateInput(String input) {
-        switch (input) {
-            case "q" -> quitApp();
-        }
+    private void checkQuit(String input) {
+        if (input.equals(QUIT_CHAR)) quitApp();
     }
 
     private void quitApp() {
@@ -106,7 +128,7 @@ public class Presenter {
         List<Move> moves = Arrays.stream(input.split(""))
                 .map(Move::valueOf)
                 .collect(Collectors.toList());
-        marsRoverModel.moveRover(roverId,moves);
+        marsRoverModel.moveRover(roverId, moves);
     }
 
 }

@@ -85,6 +85,10 @@ public class ConsoleView {
         System.out.println("\nThanks for playing! Goodbye :-)");
     }
 
+    public static void displayErrorMessage(String message) {
+        System.err.println(message);
+    }
+
     /**
      * Replaces the characters in a grid which represent a given rover and its orientation
      * @param rover
@@ -139,5 +143,4 @@ public class ConsoleView {
         int linesPerRow = ViewComponents.BOX_HEIGHT + 1;
         return (startingRow + (yFlipped * (charsPerLine * linesPerRow)) + startingColumn + (charsBetweenColumn * columns)) - 1;
     }
-
 }
