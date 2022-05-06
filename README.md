@@ -28,9 +28,9 @@ Coming soon...
 
 ### Different Plateaus
 A user will be able to choose from 3 different plataeus to create (all behaving differently)
-1. **Nursery Plateau** (the current implementation) - Moves of the edge of the plataeu are blocked. Moves into other rovers are blocked
-2. **Wrapping Plateau** - Moves of the edge of the plateau will wrap. Rovers will jump over other rovers if blocking move
-3. **Adult Plateau** - Moves of edge of plateau will destory rover. Moves into other rovers will result in both being blown up.
+1. **Nursery Plateau** (the current implementation) - Moves off the edge of the plataeu are blocked. Moves into other rovers are blocked
+2. **Wrapping Plateau** - Moves off the edge of the plateau will wrap. Rovers will jump over other rovers if blocking move
+3. **Adult Plateau** - Moves off the edge of the plateau will destory a rover. Moves into other rovers will result in both being blown up.
 
 The code is already well designed with a Plataeu interface to easily implement different plateau options.
 
