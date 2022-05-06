@@ -10,8 +10,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import static matt.thewizard.techreturners.marsrovermissions.presenter.InputConstants.QUIT_CHAR;
-import static matt.thewizard.techreturners.marsrovermissions.presenter.InputValidator.isValidCreatePlateauInput;
-import static matt.thewizard.techreturners.marsrovermissions.presenter.InputValidator.isValidOptionsInput;
+import static matt.thewizard.techreturners.marsrovermissions.presenter.InputValidator.*;
 
 public class Presenter {
 
@@ -35,7 +34,7 @@ public class Presenter {
 
         presentRoverOptions();
     }
-    
+
     private void presentCreatePlateau() {
 
         String input = consoleView.displayPlateauInput();
@@ -86,7 +85,7 @@ public class Presenter {
         String input = consoleView.displayChooseRover();
         checkQuit(input);
         int roverId = Integer.parseInt(input);
-        //TODO: Display grid with highlight
+        //TODO: Display grid with selected rover highlighted
 
         //Move rover
         input = consoleView.displayMoveRover();
@@ -101,8 +100,17 @@ public class Presenter {
 
     private void addNewRover() {
         String input = consoleView.displayAddNewRover();
+        boolean isValidInput = isValidRoverCreationInput(input);
+
+        while(isValidInput == false){
+            ConsoleView.displayInputErrorMessage(input);
+            input = consoleView.displayAddNewRover();
+            isValidInput = isValidRoverCreationInput(input);
+        }
+
         checkQuit(input);
         executeNewRoverInput(input);
+
         consoleView.displayGrid(
                 marsRoverModel.getPlateau().getXMax(),
                 marsRoverModel.getPlateau().getYMax(),
