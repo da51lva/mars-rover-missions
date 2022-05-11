@@ -2,8 +2,16 @@ package matt.thewizard.techreturners.marsrovermissions.view;
 
 public class ViewComponents {
 
-    public static final String WELCOME_TOP_LINE_MESSAGE = "----------------------------------------------------------   Welcome to the   ----------------------------------------------------------";
-    public static final String WELCOME_BOTTOM_LINE_MESSAGE = "----------------------------------------------------------------------------------------------------------------------------------------";
+    //Global
+    public static final int DISPLAY_WIDTH = 136;
+
+    //Welcome Components
+    private static final String WELCOME_COMPONENT_1 = "-";
+    private static final String WELCOME_COMPONENT_2 = "   Welcome to the   ";
+    private static final int WELCOME_TOP_LINE_PADDING = (DISPLAY_WIDTH - WELCOME_COMPONENT_2.length()) / 2;
+
+    public static final String WELCOME_TOP_LINE_MESSAGE = WELCOME_COMPONENT_1.repeat(WELCOME_TOP_LINE_PADDING) + WELCOME_COMPONENT_2 + WELCOME_COMPONENT_1.repeat(WELCOME_TOP_LINE_PADDING);
+    public static final String WELCOME_BOTTOM_LINE_MESSAGE = WELCOME_COMPONENT_1.repeat(DISPLAY_WIDTH);
 
     //ascii text generator 'isometric2' font
     public static final String MARS_ROVER_MESSAGE = """
@@ -36,6 +44,8 @@ public class ViewComponents {
             
             """;
 
+
+    //Grid Components
     public static final String GRID_COMPONENT_1 = "********";
     public static final String GRID_COMPONENT_2 = "|       ";
     public static final String GRID_COMPONENT_3 = "*";
